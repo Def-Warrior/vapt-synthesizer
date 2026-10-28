@@ -907,6 +907,9 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
     # Tab 1: Interactive Chatbot with Hacker Cartoon, Stop & Continue Controls
     # -------------------------------------------------------------------------
     with tab_chat:
+        # Check if there was a pending prompt submitted from terminal or directives
+        prompt_to_send = st.session_state.pop("pending_prompt", None)
+
         # Interactive Cyber Hacker Hero Banner with Cerulean & Electric Neon Emerald Accents
         st.markdown(
             f"""<div style="background: linear-gradient(135deg, #1c2638 0%, #141a26 100%); border: 1px solid rgba(0, 255, 157, 0.35); border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; box-shadow: 0 4px 20px rgba(0, 255, 157, 0.12); display: flex; align-items: center; justify-content: space-between;">
@@ -935,59 +938,23 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
             unsafe_allow_html=True
         )
 
-        # ---------------------------------------------------------------------
-        # Terminal Command Line (Interactive typing line shown after main IP header)
-        # ---------------------------------------------------------------------
-        st.markdown(
-            """<div style="background: linear-gradient(135deg, #182234 0%, #121824 100%); border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 8px 8px 0 0; padding: 10px 14px 4px 14px; border-bottom: none;">
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<div style="color: #00ff9d; font-family: monospace; font-size: 0.8em; font-weight: bold; letter-spacing: 0.5px;">
-<span class="emerald-pulsing-dot"></span>[>_ ANALYST TERMINAL COMMAND LINE]
-</div>
-<div style="color: #00b4d8; font-family: monospace; font-size: 0.74em;">
-EXECUTE PROMPT OR DIRECTIVE BELOW
-</div>
-</div>
-</div>""",
-            unsafe_allow_html=True
-        )
-
-        with st.form(key="terminal_prompt_form", clear_on_submit=True):
-            t_col_in, t_col_exec, t_col_stop = st.columns([7.2, 1.4, 1.4])
-            with t_col_in:
-                terminal_typed_prompt = st.text_input(
-                    "Terminal Command Line",
-                    placeholder=">_ Type vulnerability query, host remediation directive, or CVE question...",
-                    label_visibility="collapsed",
-                    key="terminal_typed_input"
-                )
-            with t_col_exec:
-                terminal_executed = st.form_submit_button("⚡ Run", type="primary", width="stretch")
-            with t_col_stop:
-                terminal_stop_hit = st.form_submit_button("⏹️ Stop", type="secondary", width="stretch")
-
-        if terminal_stop_hit:
-            st.session_state["stop_requested"] = True
-            st.session_state["show_continue_box"] = True
-            st.rerun()
-
-        # Tactical SOC Follow-Up Directives (2x2 grid directly under terminal line)
+        # Tactical SOC Follow-Up Directives (compact 2x2 grid at top)
         st.caption("⚡ Quick Directives & Fast Attack Vectors:")
         f_row1_c1, f_row1_c2 = st.columns(2)
         with f_row1_c1:
             if st.button("🛡️ Hardening Scripts & Terminal Patches", key="btn_fup_harden", width="stretch", help="Generate ready-to-run terminal patch commands"):
-                selected_prompt = "Generate exact terminal hardening commands and configuration snippets to mitigate these vulnerabilities."
+                prompt_to_send = "Generate exact terminal hardening commands and configuration snippets to mitigate these vulnerabilities."
         with f_row1_c2:
             if st.button("🔬 Attack Surface & OS Fingerprints", key="btn_fup_surface", width="stretch", help="Assess exposed services and OS footprint"):
-                selected_prompt = "Deeply analyze discovered OS fingerprints, exposed high-risk ports, and external attack surface vectors."
+                prompt_to_send = "Deeply analyze discovered OS fingerprints, exposed high-risk ports, and external attack surface vectors."
 
         f_row2_c1, f_row2_c2 = st.columns(2)
         with f_row2_c1:
             if st.button("📊 CVSS 3.1 Vector Exploitability Matrix", key="btn_fup_cvss", width="stretch", help="Examine exploitability metrics"):
-                selected_prompt = "Break down the CVSS 3.1 exploitability metrics, attack complexity, and business impact for the findings."
+                prompt_to_send = "Break down the CVSS 3.1 exploitability metrics, attack complexity, and business impact for the findings."
         with f_row2_c2:
             if st.button("📑 Executive Leadership Sign-Off Memo", key="btn_fup_exec", width="stretch", help="Draft leadership summary"):
-                selected_prompt = "Draft an executive summary memo for C-suite leadership detailing posture and required remediation timeline."
+                prompt_to_send = "Draft an executive summary memo for C-suite leadership detailing posture and required remediation timeline."
 
         # Multimodal Architecture Diagram / Screenshot Ingestion (Gemma 4 Vision Alignment)
         with st.expander("🖼️ Multimodal Architecture Diagram / Screenshot (Gemma 4 Vision)", expanded=False):
@@ -1022,18 +989,11 @@ EXECUTE PROMPT OR DIRECTIVE BELOW
                     arch_img_b64_list = [base64.b64encode(img_bytes).decode("utf-8")]
                     st.info("● Sample network topology diagram attached for multimodal correlation.")
 
-        # Bottom Chat Input Bar (also active for flexibility)
-        bottom_chat_input = st.chat_input(
-            "Ask anything about this scan, host topology, CVEs, or remediation...",
-            submit_mode="stop"
-        )
-        prompt_to_send = selected_prompt or (terminal_typed_prompt if terminal_executed and terminal_typed_prompt.strip() else None) or bottom_chat_input
+        st.markdown("<div style='border-top: 1px solid rgba(0, 150, 199, 0.25); margin: 16px 0 16px 0;'></div>", unsafe_allow_html=True)
 
         # ---------------------------------------------------------------------
         # Straight-Flow Conversation Log (ChatGPT style: answer starts from upper start, lines stream below)
         # ---------------------------------------------------------------------
-        st.markdown("<div style='border-top: 1px solid rgba(0, 150, 199, 0.25); margin: 16px 0 16px 0;'></div>", unsafe_allow_html=True)
-
         hacker_avatar_path = "data/hacker_cartoon.svg"
         analyst_avatar_path = "data/analyst_cartoon.svg"
 
@@ -1106,22 +1066,62 @@ The generation was interrupted. Choose how you would like to continue the conver
             with c_col1:
                 if st.button("▶️ Continue Generation", key="btn_continue_stream", type="primary", width="stretch", help="Resume output directly from where it stopped"):
                     st.session_state["show_continue_box"] = False
-                    st.session_state["messages"].append({"role": "user", "content": "Please continue your previous response directly from where you stopped without repeating the existing text."})
+                    st.session_state["pending_prompt"] = "Please continue your previous response directly from where you stopped without repeating the existing text."
                     st.rerun()
             with c_col2:
                 if st.button("🔧 Detail Remediation", key="btn_continue_remed", width="stretch", help="Pivot to specific hardening and patch commands"):
                     st.session_state["show_continue_box"] = False
-                    st.session_state["messages"].append({"role": "user", "content": "Provide prioritized technical remediation commands and hardening guidance for the identified findings."})
+                    st.session_state["pending_prompt"] = "Provide prioritized technical remediation commands and hardening guidance for the identified findings."
                     st.rerun()
             with c_col3:
                 if st.button("📋 Key Takeaways", key="btn_continue_takeaways", width="stretch", help="Summarize key risk takeaways"):
                     st.session_state["show_continue_box"] = False
-                    st.session_state["messages"].append({"role": "user", "content": "Summarize the critical takeaways and overall security posture in a concise briefing."})
+                    st.session_state["pending_prompt"] = "Summarize the critical takeaways and overall security posture in a concise briefing."
                     st.rerun()
             with c_col4:
                 if st.button("✖️ Dismiss", key="btn_continue_dismiss", width="stretch", help="Close this continue prompt"):
                     st.session_state["show_continue_box"] = False
                     st.rerun()
+
+        # ---------------------------------------------------------------------
+        # Terminal Command Line (Rendered AT THE END OF THE CHAT)
+        # ---------------------------------------------------------------------
+        st.markdown(
+            """<div style="background: linear-gradient(135deg, #182234 0%, #121824 100%); border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 8px 8px 0 0; padding: 10px 14px 4px 14px; margin-top: 18px; border-bottom: none;">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div style="color: #00ff9d; font-family: monospace; font-size: 0.8em; font-weight: bold; letter-spacing: 0.5px;">
+<span class="emerald-pulsing-dot"></span>[>_ ANALYST TERMINAL COMMAND LINE]
+</div>
+<div style="color: #00b4d8; font-family: monospace; font-size: 0.74em;">
+TYPE PROMPT & PRESS ENTER // TERMINAL AT END OF CHAT
+</div>
+</div>
+</div>""",
+            unsafe_allow_html=True
+        )
+
+        with st.form(key="terminal_prompt_form", clear_on_submit=True):
+            t_col_in, t_col_exec, t_col_stop = st.columns([7.2, 1.4, 1.4])
+            with t_col_in:
+                terminal_typed_prompt = st.text_input(
+                    "Terminal Command Line",
+                    placeholder=">_ Type vulnerability query, host remediation directive, or CVE question... (Press Enter to Run)",
+                    label_visibility="collapsed",
+                    key="terminal_typed_input"
+                )
+            with t_col_exec:
+                terminal_executed = st.form_submit_button("⚡ Run", type="primary", width="stretch")
+            with t_col_stop:
+                terminal_stop_hit = st.form_submit_button("⏹️ Stop", type="secondary", width="stretch")
+
+        if terminal_stop_hit:
+            st.session_state["stop_requested"] = True
+            st.session_state["show_continue_box"] = True
+            st.rerun()
+
+        if terminal_executed and terminal_typed_prompt.strip():
+            st.session_state["pending_prompt"] = terminal_typed_prompt.strip()
+            st.rerun()
 
     # -------------------------------------------------------------------------
     # Tab 2: Deep Recon & Topology
