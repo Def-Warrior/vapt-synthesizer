@@ -330,6 +330,105 @@ CYBER_CSS = """
     .pulsing-circuit-node {
         animation: pulseNode 3s ease-in-out infinite;
     }
+
+    /* Spacious Tactical Cyber Telemetry Grid */
+    .telemetry-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 22px;
+    }
+    @media (max-width: 1024px) {
+        .telemetry-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (max-width: 640px) {
+        .telemetry-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    .telemetry-card {
+        background: linear-gradient(135deg, #0d121c 0%, #080c14 100%);
+        border: 1px solid rgba(0, 150, 199, 0.35);
+        border-radius: 10px;
+        padding: 16px 20px;
+        min-height: 105px;
+        box-shadow: 0 4px 16px rgba(0, 150, 199, 0.1);
+        transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .telemetry-card:hover {
+        border-color: #00ff9d !important;
+        box-shadow: 0 4px 22px rgba(0, 255, 157, 0.2) !important;
+        transform: translateY(-2px);
+    }
+    .telemetry-card-title {
+        color: #00b4d8;
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .telemetry-card-value {
+        color: #ffffff;
+        font-family: 'JetBrains Mono', monospace, Consolas, monospace;
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 1.25;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .telemetry-card-sub {
+        color: #8b9bb4;
+        font-size: 0.78rem;
+        margin-top: 6px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .telemetry-pill {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.72rem;
+        font-weight: bold;
+        letter-spacing: 0.4px;
+    }
+
+    /* Structured Finding Cards */
+    .finding-card {
+        background: linear-gradient(135deg, #0d121c 0%, #070c14 100%) !important;
+        border-radius: 8px !important;
+        padding: 18px 22px !important;
+        margin-bottom: 16px !important;
+        border-top: 1px solid rgba(0, 150, 199, 0.2) !important;
+        border-right: 1px solid rgba(0, 150, 199, 0.2) !important;
+        border-bottom: 1px solid rgba(0, 150, 199, 0.2) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.45) !important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+    }
+    .finding-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 150, 199, 0.25) !important;
+        border-color: rgba(0, 255, 157, 0.4) !important;
+    }
+    .finding-remediation-box {
+        background-color: #05080e !important;
+        padding: 12px 16px !important;
+        border-radius: 6px !important;
+        border: 1px solid rgba(0, 150, 199, 0.35) !important;
+        margin-top: 10px !important;
+        line-height: 1.5 !important;
+    }
 </style>
 """
 st.markdown(CYBER_CSS, unsafe_allow_html=True)
@@ -736,21 +835,56 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
     recon = parsed_scan.get("recon", {})
     findings = parsed_scan.get("findings", [])
 
-    # Cerulean Metrics Row
-    m_col1, m_col2, m_col3, m_col4, m_col5 = st.columns(5)
-    with m_col1:
-        st.metric("🎯 Scope Target", str(metadata.get("target", "Unknown"))[:18])
-    with m_col2:
-        st.metric("🖥️ Hosts Profiled", recon.get("total_hosts", 1))
-    with m_col3:
-        st.metric("🔌 Open Ports", recon.get("total_open_ports", len(findings)))
-    with m_col4:
-        crit_count = sum(1 for f in findings if f.get("severity") == "CRITICAL")
-        high_count = sum(1 for f in findings if f.get("severity") == "HIGH")
-        st.metric("🚨 Crit / High", f"{crit_count} / {high_count}")
-    with m_col5:
-        is_auth = metadata.get("authenticated_audit", False)
-        st.metric("🔐 Mode", "Authenticated" if is_auth else "Perimeter Recon")
+    # Structured Tactical Cyber Telemetry Grid (Spacious, Responsive, No Truncation)
+    target_str = str(metadata.get("target", "Unknown Scope"))
+    total_hosts = recon.get("total_hosts", 1)
+    total_ports = recon.get("total_open_ports", len(findings))
+    crit_count = sum(1 for f in findings if f.get("severity") == "CRITICAL")
+    high_count = sum(1 for f in findings if f.get("severity") == "HIGH")
+    total_vulns = len(findings)
+    is_auth = metadata.get("authenticated_audit", False)
+    scan_type = metadata.get("scan_type", "VAPT Profile")
+
+    if crit_count > 0:
+        threat_color = "#da3633"
+        threat_label = f"{crit_count} Critical Threat{'s' if crit_count != 1 else ''}"
+    elif high_count > 0:
+        threat_color = "#d29922"
+        threat_label = f"{high_count} Elevated Risk"
+    elif total_vulns > 0:
+        threat_color = "#0096c7"
+        threat_label = f"{total_vulns} Moderate Issues"
+    else:
+        threat_color = "#00ff9d"
+        threat_label = "Zero Vulnerabilities"
+
+    mode_color = "#00ff9d" if is_auth else "#00b4d8"
+    mode_text = "🔒 Privileged CIS Audit" if is_auth else "🌐 Perimeter Recon"
+    mode_sub = "Authenticated Compliance" if is_auth else "External Port & Service Map"
+
+    telemetry_html = f"""<div class="telemetry-grid">
+<div class="telemetry-card">
+<div class="telemetry-card-title">🎯 TARGET SCOPE</div>
+<div class="telemetry-card-value" title="{target_str}">{target_str}</div>
+<div class="telemetry-card-sub"><span style="color: #00ff9d;">●</span> {scan_type}</div>
+</div>
+<div class="telemetry-card">
+<div class="telemetry-card-title">🖥️ ASSETS & TOPOLOGY</div>
+<div class="telemetry-card-value">{total_hosts} Host{'s' if total_hosts != 1 else ''} Profiled</div>
+<div class="telemetry-card-sub"><span style="color: #00b4d8;">●</span> {total_ports} Open Service{'s' if total_ports != 1 else ''} Discovered</div>
+</div>
+<div class="telemetry-card">
+<div class="telemetry-card-title">🚨 THREAT EXPOSURE</div>
+<div class="telemetry-card-value" style="color: {'#ff7b72' if crit_count > 0 else '#ffffff'};">{crit_count} Crit &nbsp;|&nbsp; {high_count} High</div>
+<div class="telemetry-card-sub"><span style="color: {threat_color};">●</span> {total_vulns} Total Finding{'s' if total_vulns != 1 else ''} ({threat_label})</div>
+</div>
+<div class="telemetry-card">
+<div class="telemetry-card-title">🛡️ AUDIT POSTURE</div>
+<div class="telemetry-card-value" style="font-size: 1.1rem; color: {mode_color};">{mode_text}</div>
+<div class="telemetry-card-sub"><span style="color: #00ff9d;">● Air-Gap Compliant</span> • {mode_sub}</div>
+</div>
+</div>"""
+    st.markdown(telemetry_html, unsafe_allow_html=True)
 
     # Tabbed Navigation
     tab_chat, tab_recon, tab_findings, tab_raw = st.tabs([
@@ -777,7 +911,7 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
                             <span style="color: #00e5ff;">CYBER RECON AI</span> // <span style="color: #00ff9d;">GEMMA BOT</span>
                         </div>
                         <div style="color: #8b9bb4; font-size: 0.85em; margin-top: 4px;">
-                            <span class="emerald-pulsing-dot"></span><strong>STATUS:</strong> <span style="color: #00ff9d;">ONLINE</span> • <strong>ENGINE:</strong> {model_name.upper()} • <strong>TARGET:</strong> <code>{str(metadata.get('target', 'N/A'))[:22]}</code>
+                            <span class="emerald-pulsing-dot"></span><strong>STATUS:</strong> <span style="color: #00ff9d;">ONLINE</span> • <strong>ENGINE:</strong> {model_name.upper()} • <strong>TARGET:</strong> <code>{str(metadata.get('target', 'N/A'))[:45]}</code>
                         </div>
                         <div style="color: #00b4d8; font-size: 0.8em; margin-top: 2px;">
                             🔒 Air-Gapped Inference • Zero Off-Box Network Dispatch
@@ -795,7 +929,7 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
         )
 
         # Stop Control Bar
-        stop_col1, stop_col2 = st.columns([5, 1])
+        stop_col1, stop_col2 = st.columns([4.2, 1.8])
         with stop_col2:
             if st.button("⏹️ Stop Chat", type="secondary", width="stretch", help="Halt the current streaming response immediately like ChatGPT."):
                 st.session_state["stop_requested"] = True
@@ -892,20 +1026,22 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
 
         # Interactive Quick Follow-Up Directives (visible when messages exist and not interrupted)
         if st.session_state["messages"] and not st.session_state.get("show_continue_box"):
-            st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height: 6px;'></div>", unsafe_allow_html=True)
             st.caption("⚡ Tactical SOC Follow-Up Directives:")
-            f_col1, f_col2, f_col3, f_col4 = st.columns(4)
-            with f_col1:
-                if st.button("🛡️ Hardening Scripts", key="btn_fup_harden", width="stretch", help="Generate ready-to-run terminal patch commands"):
+            f_row1_c1, f_row1_c2 = st.columns(2)
+            with f_row1_c1:
+                if st.button("🛡️ Hardening Scripts & Terminal Patches", key="btn_fup_harden", width="stretch", help="Generate ready-to-run terminal patch commands"):
                     prompt_to_send = "Generate exact terminal hardening commands and configuration snippets to mitigate these vulnerabilities."
-            with f_col2:
-                if st.button("🔬 Attack Surface & OS", key="btn_fup_surface", width="stretch", help="Assess exposed services and OS footprint"):
+            with f_row1_c2:
+                if st.button("🔬 Attack Surface & OS Fingerprints", key="btn_fup_surface", width="stretch", help="Assess exposed services and OS footprint"):
                     prompt_to_send = "Deeply analyze discovered OS fingerprints, exposed high-risk ports, and external attack surface vectors."
-            with f_col3:
-                if st.button("📊 CVSS Vector Breakdown", key="btn_fup_cvss", width="stretch", help="Examine exploitability metrics"):
+
+            f_row2_c1, f_row2_c2 = st.columns(2)
+            with f_row2_c1:
+                if st.button("📊 CVSS 3.1 Vector Exploitability Matrix", key="btn_fup_cvss", width="stretch", help="Examine exploitability metrics"):
                     prompt_to_send = "Break down the CVSS 3.1 exploitability metrics, attack complexity, and business impact for the findings."
-            with f_col4:
-                if st.button("📑 Executive Sign-Off Memo", key="btn_fup_exec", width="stretch", help="Draft leadership summary"):
+            with f_row2_c2:
+                if st.button("📑 Executive Leadership Sign-Off Memo", key="btn_fup_exec", width="stretch", help="Draft leadership summary"):
                     prompt_to_send = "Draft an executive summary memo for C-suite leadership detailing posture and required remediation timeline."
 
         if prompt_to_send:
@@ -998,19 +1134,15 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
                 open_ports = host.get("open_ports", [])
 
                 with st.expander(f"🖥️ Host {idx+1}: {ip} ({hostnames})", expanded=expand_hosts):
-                    r_col1, r_col2, r_col3, r_col4 = st.columns(4)
+                    r_col1, r_col2 = st.columns([1, 1])
                     with r_col1:
-                        st.markdown(f"**IP Address:** `{ip}`")
-                        st.markdown(f"**Status:** `UP`")
+                        st.markdown(f"**IP Address:** `{ip}` &nbsp;|&nbsp; **Status:** <span style='color: #00ff9d; font-weight: bold;'>UP</span>", unsafe_allow_html=True)
+                        st.markdown(f"**OS Fingerprint:** `{os_name}`")
+                        st.markdown(f"**Network Traceroute Hops:** `{hops}`")
                     with r_col2:
-                        st.markdown(f"**OS Detected:** `{os_name}`")
-                        st.markdown(f"**Traceroute Hops:** `{hops}`")
-                    with r_col3:
-                        st.markdown(f"**MAC Address:** `{mac}`")
-                        st.markdown(f"**Hardware Vendor:** `{vendor}`")
-                    with r_col4:
-                        st.markdown(f"**Open Ports:** `{len(open_ports)}`")
-                        st.markdown(f"**Hostnames:** `{hostnames}`")
+                        st.markdown(f"**MAC Address:** `{mac}` &nbsp;|&nbsp; **Vendor:** `{vendor}`")
+                        st.markdown(f"**Discovered Hostnames:** `{hostnames}`")
+                        st.markdown(f"**Open Services Profiled:** `{len(open_ports)} port{'s' if len(open_ports) != 1 else ''}`")
 
                     if open_ports:
                         st.markdown("##### Exposed Services & Ports")
@@ -1102,25 +1234,23 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
                 border_color = color_map.get(sev, "#8b949e")
 
                 st.markdown(
-                    f"""
-                    <div style="border-left: 5px solid {border_color}; background-color: #0d121c; padding: 16px 20px; border-radius: 6px; margin-bottom: 14px; border-top: 1px solid rgba(0,150,199,0.15); border-right: 1px solid rgba(0,150,199,0.15); border-bottom: 1px solid rgba(0,150,199,0.15); box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <h4 style="margin: 0; color: #ffffff; font-family: monospace;">#{idx+1} {f.get('title')}</h4>
-                            <span style="background-color: {border_color}; color: #ffffff; padding: 3px 12px; border-radius: 12px; font-weight: bold; font-size: 0.8em; letter-spacing: 0.5px;">{sev}</span>
-                        </div>
-                        <div style="margin-top: 8px; color: #8b9bb4; font-size: 0.85em;">
-                            <strong>Component:</strong> <code style="color: #00e5ff;">{f.get('affected_component')}</code> | 
-                            <strong>CVE:</strong> <code style="color: #00b4d8;">{f.get('cve')}</code> | 
-                            <strong>CVSS:</strong> <code style="color: #ffffff;">{f.get('cvss')}</code> |
-                            <strong>Check Type:</strong> {'🔒 Privileged Audit' if f.get('authenticated_check') else '🌐 Perimeter Discovery'}
-                        </div>
-                        <p style="margin-top: 10px; color: #d8e2ec; font-size: 0.95em;">{f.get('description')}</p>
-                        <div style="background-color: #06090e; padding: 12px; border-radius: 6px; border: 1px solid rgba(0, 150, 199, 0.3); margin-top: 8px;">
-                            <span style="color: #00b4d8; font-weight: bold;">Remediation Directives:</span> 
-                            <span style="color: #d8e2ec;">{f.get('remediation', 'N/A')}</span>
-                        </div>
-                    </div>
-                    """,
+                    f"""<div class="finding-card" style="border-left: 5px solid {border_color} !important;">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<h4 style="margin: 0; color: #ffffff; font-family: monospace;">#{idx+1} {f.get('title')}</h4>
+<span style="background-color: {border_color}; color: #ffffff; padding: 3px 12px; border-radius: 12px; font-weight: bold; font-size: 0.8em; letter-spacing: 0.5px;">{sev}</span>
+</div>
+<div style="margin-top: 8px; color: #8b9bb4; font-size: 0.85em;">
+<strong>Component:</strong> <code style="color: #00e5ff;">{f.get('affected_component')}</code> | 
+<strong>CVE:</strong> <code style="color: #00b4d8;">{f.get('cve')}</code> | 
+<strong>CVSS:</strong> <code style="color: #ffffff;">{f.get('cvss')}</code> |
+<strong>Check Type:</strong> {'🔒 Privileged Audit' if f.get('authenticated_check') else '🌐 Perimeter Discovery'}
+</div>
+<p style="margin-top: 10px; color: #d8e2ec; font-size: 0.95em;">{f.get('description')}</p>
+<div class="finding-remediation-box">
+<span style="color: #00b4d8; font-weight: bold;">Remediation Directives:</span> 
+<span style="color: #d8e2ec;">{f.get('remediation', 'N/A')}</span>
+</div>
+</div>""",
                     unsafe_allow_html=True
                 )
 
