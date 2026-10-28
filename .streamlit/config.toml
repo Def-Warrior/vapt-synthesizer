@@ -16,3 +16,12 @@ gatherUsageStats = false
 [server]
 enableCORS = false
 enableXsrfProtection = true
+fileWatcherType = "none"
+runOnSave = false
+fastReruns = true
+maxMessageSize = 50
+enableWebsocketCompression = true
+
+[client]
+showErrorDetails = false
+toolbarMode = "minimal"

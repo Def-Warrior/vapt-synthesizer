@@ -25,6 +25,50 @@ from agent.synthesizer import (
 )
 
 # -----------------------------------------------------------------------------
+# High-Performance Cached Data & Model Helpers
+# -----------------------------------------------------------------------------
+@st.cache_data(show_spinner=False, max_entries=10)
+def load_scan_file_cached(file_path: str) -> str:
+    """Fast-cached filesystem reader for sample security scans."""
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return ""
+
+@st.cache_data(show_spinner=False, max_entries=20)
+def parse_vulnerability_input_cached(raw_text: str):
+    """Cached scan parser to avoid re-parsing identical scan feeds."""
+    return parse_vulnerability_input(raw_text)
+
+@st.cache_data(ttl=25, show_spinner=False)
+def get_available_ollama_models_cached() -> List[str]:
+    """Cached Ollama model listing (25s TTL) to prevent synchronous HTTP stalls on every rerun."""
+    return get_available_ollama_models()
+
+@st.cache_data(ttl=25, show_spinner=False)
+def verify_ollama_model_cached(model: str):
+    """Cached Ollama model status verification (25s TTL)."""
+    return verify_ollama_model(model)
+
+@st.cache_data(show_spinner=False, max_entries=10)
+def generate_executive_html_dossier_cached(
+    scan_target: str,
+    findings_count: int,
+    user_name: str,
+    user_role: str,
+    auth_time: str,
+    ai_summary: str,
+    _scan_data: Dict[str, Any],
+    _user_profile: Dict[str, Any]
+) -> str:
+    """Cached executive dossier generator - builds massive HTML document once and reuses."""
+    return generate_executive_html_dossier(
+        scan_data=_scan_data,
+        user_profile=_user_profile,
+        ai_summary=ai_summary
+    )
+
+# -----------------------------------------------------------------------------
 # Streamlit Page Configuration
 # -----------------------------------------------------------------------------
 st.set_page_config(
@@ -213,24 +257,30 @@ CYBER_CSS = """
         z-index: 0;
         overflow: hidden;
         opacity: 0.22;
+        contain: strict;
+        will-change: transform;
+        transform: translate3d(0, 0, 0);
     }
 
-    /* Animated Scanning Laser Line */
+    /* Animated Scanning Laser Line - GPU Accelerated translate3d */
     .cyber-scanning-laser {
         position: absolute;
+        top: 0;
         left: 0;
         width: 100%;
         height: 2.5px;
         background: linear-gradient(90deg, transparent 0%, rgba(0, 150, 199, 0.4) 20%, #00ff9d 50%, rgba(0, 150, 199, 0.4) 80%, transparent 100%);
         box-shadow: 0 0 16px rgba(0, 255, 157, 0.9), 0 0 35px rgba(0, 150, 199, 0.6);
+        will-change: transform, opacity;
+        transform: translate3d(0, -10px, 0);
         animation: laserSweep 9s linear infinite;
     }
 
     @keyframes laserSweep {
-        0% { top: -2%; opacity: 0; }
+        0% { transform: translate3d(0, -10px, 0); opacity: 0; }
         8% { opacity: 0.9; }
         92% { opacity: 0.9; }
-        100% { top: 102%; opacity: 0; }
+        100% { transform: translate3d(0, 102vh, 0); opacity: 0; }
     }
 
     /* Ambient Horizon Perspective Grid Lines */
@@ -246,29 +296,33 @@ CYBER_CSS = """
             repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0, 255, 157, 0.08) 40px);
         mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
         -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+        contain: strict;
+        transform: translate3d(0, 0, 0);
     }
 
-    /* Robot Skeleton Cartoon Hover & Positioning */
+    /* Robot Skeleton Cartoon Hover & Positioning - Hardware Accelerated */
     .cyber-skeleton-droid {
         position: absolute;
         bottom: 2%;
         right: 2%;
         width: 320px;
         height: 448px;
+        will-change: transform;
+        transform: translate3d(0, 0, 0);
         animation: droidHover 6s ease-in-out infinite;
         filter: drop-shadow(0 0 18px rgba(0, 255, 157, 0.4));
     }
 
     @keyframes droidHover {
         0%, 100% {
-            transform: translateY(0px) rotate(0deg);
+            transform: translate3d(0, 0px, 0) rotate(0deg);
         }
         50% {
-            transform: translateY(-16px) rotate(1.2deg);
+            transform: translate3d(0, -16px, 0) rotate(1.2deg);
         }
     }
 
-    /* Secondary Skeleton Droid Silhouette on Left Edge */
+    /* Secondary Skeleton Droid Silhouette on Left Edge - Hardware Accelerated */
     .cyber-skeleton-silhouette {
         position: absolute;
         top: 14%;
@@ -276,16 +330,18 @@ CYBER_CSS = """
         width: 220px;
         height: 308px;
         opacity: 0.45;
+        will-change: transform;
+        transform: translate3d(0, 0, 0) scaleX(-1);
         animation: droidHoverLeft 8s ease-in-out infinite;
         filter: drop-shadow(0 0 12px rgba(0, 150, 199, 0.3));
     }
 
     @keyframes droidHoverLeft {
         0%, 100% {
-            transform: translateY(0px) rotate(0deg) scaleX(-1);
+            transform: translate3d(0, 0px, 0) rotate(0deg) scaleX(-1);
         }
         50% {
-            transform: translateY(-14px) rotate(-1.2deg) scaleX(-1);
+            transform: translate3d(0, -14px, 0) rotate(-1.2deg) scaleX(-1);
         }
     }
 
@@ -296,20 +352,25 @@ CYBER_CSS = """
         left: 0;
         width: 100%;
         height: 100%;
+        contain: strict;
+        transform: translate3d(0, 0, 0);
     }
 
     .circuit-stream-1 {
         stroke-dasharray: 12, 18;
+        will-change: stroke-dashoffset;
         animation: flowLine 12s linear infinite;
     }
 
     .circuit-stream-2 {
         stroke-dasharray: 16, 24;
+        will-change: stroke-dashoffset;
         animation: flowLineRev 15s linear infinite;
     }
 
     .circuit-stream-3 {
         stroke-dasharray: 8, 14;
+        will-change: stroke-dashoffset;
         animation: flowLine 9s linear infinite;
     }
 
@@ -666,7 +727,7 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
             st.success("● Engine: Autonomous Air-Gap Synthesizer")
             st.caption("Zero external daemons required. Deterministic on-device cybersecurity reasoning.")
         else:
-            pulled_models = get_available_ollama_models()
+            pulled_models = get_available_ollama_models_cached()
             if pulled_models:
                 # Default to model matching 'gemma' (e.g. gemma, gemma:latest, gemma4)
                 default_idx = 0
@@ -678,7 +739,7 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
             else:
                 model_name = st.text_input("Ollama Model Tag", value="gemma", help="Local quantized Ollama model tag (defaults to gemma)")
 
-            is_ready, status_msg = verify_ollama_model(model_name)
+            is_ready, status_msg = verify_ollama_model_cached(model_name)
             if is_ready:
                 st.success(f"● Model Active: {model_name}")
             else:
@@ -687,6 +748,8 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
                 with col_btn1:
                     if st.button("🚀 Start Daemon", width="stretch"):
                         ok, msg = start_ollama_daemon()
+                        get_available_ollama_models_cached.clear()
+                        verify_ollama_model_cached.clear()
                         if ok:
                             st.success(msg)
                             st.rerun()
@@ -694,6 +757,8 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
                             st.error(msg)
                 with col_btn2:
                     if st.button("🔄 Refresh", width="stretch"):
+                        get_available_ollama_models_cached.clear()
+                        verify_ollama_model_cached.clear()
                         st.rerun()
 
         st.markdown("---")
@@ -715,44 +780,29 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
         active_name = ""
 
         if scan_source == "🔬 Deep Recon (Multi-Host Nmap XML)":
-            path = "data/sample_deep_recon.xml"
-            if os.path.exists(path):
-                with open(path, "r", encoding="utf-8") as f:
-                    raw_text = f.read()
-                active_name = "sample_deep_recon.xml (Multi-Host Nmap)"
+            raw_text = load_scan_file_cached("data/sample_deep_recon.xml")
+            active_name = "sample_deep_recon.xml (Multi-Host Nmap)"
         elif scan_source == "🔐 Authenticated Audit (CIS Benchmark JSON)":
-            path = "data/sample_authenticated_scan.json"
-            if os.path.exists(path):
-                with open(path, "r", encoding="utf-8") as f:
-                    raw_text = f.read()
-                active_name = "sample_authenticated_scan.json (Privileged Audit)"
+            raw_text = load_scan_file_cached("data/sample_authenticated_scan.json")
+            active_name = "sample_authenticated_scan.json (Privileged Audit)"
         elif scan_source == "🎯 Tenable Nessus (sample_nessus.xml)":
-            path = "data/sample_nessus.xml"
-            if os.path.exists(path):
-                with open(path, "r", encoding="utf-8") as f:
-                    raw_text = f.read()
-                active_name = "sample_nessus.xml (Tenable Nessus XML)"
+            raw_text = load_scan_file_cached("data/sample_nessus.xml")
+            active_name = "sample_nessus.xml (Tenable Nessus XML)"
         elif scan_source == "⚡ ProjectDiscovery Nuclei (sample_nuclei.json)":
-            path = "data/sample_nuclei.json"
-            if os.path.exists(path):
-                with open(path, "r", encoding="utf-8") as f:
-                    raw_text = f.read()
-                active_name = "sample_nuclei.json (Nuclei Vulnerability Stream)"
+            raw_text = load_scan_file_cached("data/sample_nuclei.json")
+            active_name = "sample_nuclei.json (Nuclei Vulnerability Stream)"
         elif scan_source == "📋 General Scan (sample_vuln.json)":
-            path = "data/sample_vuln.json"
-            if os.path.exists(path):
-                with open(path, "r", encoding="utf-8") as f:
-                    raw_text = f.read()
-                active_name = "sample_vuln.json"
+            raw_text = load_scan_file_cached("data/sample_vuln.json")
+            active_name = "sample_vuln.json"
         else:
             uploaded_file = st.file_uploader("Upload Nmap XML, Nessus XML, or Scan JSON/JSONL", type=["xml", "json", "nessus", "jsonl"])
             if uploaded_file is not None:
                 raw_text = uploaded_file.getvalue().decode("utf-8", errors="replace")
                 active_name = uploaded_file.name
 
-        # Parse scan on selection change
+        # Parse scan on selection change (Fast Cached Parser)
         if raw_text and (active_name != st.session_state["active_scan_name"] or st.session_state["parsed_scan"] is None):
-            success, msg, structured_data = parse_vulnerability_input(raw_text)
+            success, msg, structured_data = parse_vulnerability_input_cached(raw_text)
             if success:
                 st.session_state["active_scan_name"] = active_name
                 st.session_state["loaded_scan_content"] = raw_text
@@ -801,13 +851,19 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
                 width="stretch"
             )
 
-        # Download Executive Audit Dossier from Sidebar
+        # Download Executive Audit Dossier from Sidebar (Fast Cached Generation)
         if st.session_state.get("parsed_scan"):
             last_ai_note = st.session_state["messages"][-1]["content"] if st.session_state["messages"] and st.session_state["messages"][-1]["role"] == "assistant" else ""
-            html_dossier = generate_executive_html_dossier(
-                scan_data=st.session_state["parsed_scan"],
-                user_profile=user,
-                ai_summary=last_ai_note
+            p_scan = st.session_state["parsed_scan"]
+            html_dossier = generate_executive_html_dossier_cached(
+                scan_target=str(p_scan.get("metadata", {}).get("target", "")),
+                findings_count=len(p_scan.get("findings", [])),
+                user_name=str(user.get("name", "")),
+                user_role=str(user.get("role", "")),
+                auth_time=str(user.get("authenticated_at", "")),
+                ai_summary=last_ai_note,
+                _scan_data=p_scan,
+                _user_profile=user
             )
             st.download_button(
                 "📄 Download Executive Dossier (HTML/PDF)",
@@ -1184,11 +1240,13 @@ TYPE PROMPT & PRESS ENTER // TERMINAL AT END OF CHAT
                             const parentDoc = window.parent.document;
                             const main = parentDoc.querySelector('main') || parentDoc.querySelector('.main') || parentDoc.querySelector('[data-testid="stMain"]');
                             if (main) {
-                                main.scrollTo({ top: main.scrollHeight, behavior: 'smooth' });
+                                requestAnimationFrame(() => {
+                                    main.scrollTo({ top: main.scrollHeight, behavior: 'smooth' });
+                                });
                             }
                             const inp = parentDoc.querySelector('input[key="terminal_typed_input_bottom"], input[aria-label="Terminal Command Line"]');
                             if (inp) {
-                                inp.focus();
+                                inp.focus({ preventScroll: true });
                             }
                         } catch (e) {
                             console.warn("Auto-scroll error:", e);
@@ -1286,12 +1344,17 @@ TYPE PROMPT & PRESS ENTER // TERMINAL AT END OF CHAT
         st.markdown("### 📊 Identified Vulnerabilities & Exposures")
         st.caption("Normalized vulnerability findings with CVSS scores and technical remediation guidance.")
 
-        # One-Click Executive Audit Dossier Export
+        # One-Click Executive Audit Dossier Export (Fast Cached Generation)
         last_ai_note = st.session_state["messages"][-1]["content"] if st.session_state["messages"] and st.session_state["messages"][-1]["role"] == "assistant" else ""
-        html_dossier = generate_executive_html_dossier(
-            scan_data=parsed_scan,
-            user_profile=user,
-            ai_summary=last_ai_note
+        html_dossier = generate_executive_html_dossier_cached(
+            scan_target=str(parsed_scan.get("metadata", {}).get("target", "")),
+            findings_count=len(parsed_scan.get("findings", [])),
+            user_name=str(user.get("name", "")),
+            user_role=str(user.get("role", "")),
+            auth_time=str(user.get("authenticated_at", "")),
+            ai_summary=last_ai_note,
+            _scan_data=parsed_scan,
+            _user_profile=user
         )
         st.download_button(
             label="📄 Download Complete Executive Audit Dossier (Printable HTML / PDF)",
