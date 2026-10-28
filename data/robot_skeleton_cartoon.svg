@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" width="100%" height="100%">
+  <defs>
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <linearGradient id="cyberSpine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0096c7" />
+      <stop offset="100%" stop-color="#00ff9d" />
+    </linearGradient>
+    <linearGradient id="laserBeam" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(0, 150, 199, 0)" />
+      <stop offset="50%" stop-color="#00ff9d" />
+      <stop offset="100%" stop-color="rgba(0, 150, 199, 0)" />
+    </linearGradient>
+  </defs>
+
+  <!-- Ambient Hologram Backlight Aura -->
+  <ellipse cx="200" cy="300" rx="160" ry="220" fill="rgba(0, 150, 199, 0.04)" />
+  <ellipse cx="200" cy="300" rx="90" ry="140" fill="rgba(0, 255, 157, 0.03)" />
+  
+  <!-- Robot Skeleton Skull -->
+  <g class="robot-skull">
+    <!-- Skull Cranium Shell -->
+    <path d="M 135 160 C 135 65, 265 65, 265 160 C 265 205, 255 225, 238 245 L 238 275 L 162 275 L 162 245 C 145 225, 135 205, 135 160 Z" fill="#080e18" stroke="#0096c7" stroke-width="2.5" />
+    
+    <!-- Cranial Seams & Circuit Inlays -->
+    <path d="M 155 105 L 200 130 L 245 105" fill="none" stroke="#00ff9d" stroke-width="1.5" stroke-dasharray="3,3" />
+    <line x1="200" y1="70" x2="200" y2="130" stroke="#0096c7" stroke-width="2" />
+    <circle cx="155" cy="105" r="3" fill="#00ff9d" />
+    <circle cx="245" cy="105" r="3" fill="#00ff9d" />
+    <circle cx="200" cy="70" r="3" fill="#0096c7" />
+    
+    <!-- Forehead Tactical Visor Plate -->
+    <path d="M 150 138 L 250 138 L 240 152 L 160 152 Z" fill="#0e1726" stroke="#007ba7" stroke-width="1.5" />
+
+    <!-- Angular Cyber Eye Sockets -->
+    <polygon points="158,165 192,160 186,188 162,188" fill="#03060a" stroke="#0096c7" stroke-width="2" />
+    <polygon points="242,165 208,160 214,188 238,188" fill="#03060a" stroke="#0096c7" stroke-width="2" />
+    
+    <!-- Glowing Robot Skeleton Pupils -->
+    <circle cx="175" cy="175" r="6.5" fill="#00ff9d" filter="url(#neonGlow)" />
+    <circle cx="225" cy="175" r="6.5" fill="#00ff9d" filter="url(#neonGlow)" />
+    <circle cx="175" cy="175" r="2" fill="#ffffff" />
+    <circle cx="225" cy="175" r="2" fill="#ffffff" />
+    
+    <!-- Nasal Cavity Mechanical Port -->
+    <polygon points="200,195 193,214 207,214" fill="#0096c7" />
+    
+    <!-- Skeletal Teeth & Grille (Cyan/Emerald Alternating) -->
+    <rect x="168" y="252" width="12" height="18" rx="2" fill="#0e1726" stroke="#00ff9d" stroke-width="1.5" />
+    <rect x="184" y="252" width="12" height="18" rx="2" fill="#0e1726" stroke="#0096c7" stroke-width="1.5" />
+    <rect x="204" y="252" width="12" height="18" rx="2" fill="#0e1726" stroke="#00ff9d" stroke-width="1.5" />
+    <rect x="220" y="252" width="12" height="18" rx="2" fill="#0e1726" stroke="#0096c7" stroke-width="1.5" />
+    
+    <!-- Jaw Hydraulic Pistons -->
+    <line x1="150" y1="225" x2="162" y2="275" stroke="#007ba7" stroke-width="3.5" stroke-linecap="round" />
+    <line x1="250" y1="225" x2="238" y2="275" stroke="#007ba7" stroke-width="3.5" stroke-linecap="round" />
+  </g>
+  
+  <!-- Neck / Vertebrae Stack -->
+  <g class="robot-neck">
+    <rect x="186" y="280" width="28" height="9" rx="2" fill="#0e1724" stroke="#0096c7" stroke-width="1.5" />
+    <rect x="182" y="293" width="36" height="9" rx="2" fill="#0e1724" stroke="#00ff9d" stroke-width="1.5" />
+    <rect x="178" y="306" width="44" height="10" rx="2" fill="#0e1724" stroke="#0096c7" stroke-width="1.5" />
+    <!-- Wiring Conduits running along neck -->
+    <path d="M 172 278 C 170 295, 168 310, 165 320" fill="none" stroke="#00ff9d" stroke-width="1.5" stroke-dasharray="2,2" />
+    <path d="M 228 278 C 230 295, 232 310, 235 320" fill="none" stroke="#00ff9d" stroke-width="1.5" stroke-dasharray="2,2" />
+  </g>
+  
+  <!-- Robot Skeleton Ribcage & Chest Reactor -->
+  <g class="robot-ribcage">
+    <!-- Clavicle Bar -->
+    <path d="M 115 322 L 200 332 L 285 322" fill="none" stroke="#0096c7" stroke-width="3.5" stroke-linecap="round" />
+    
+    <!-- Central Mechanical Spine Column -->
+    <line x1="200" y1="332" x2="200" y2="475" stroke="url(#cyberSpine)" stroke-width="4.5" />
+    <circle cx="200" cy="355" r="4.5" fill="#00ff9d" />
+    <circle cx="200" cy="385" r="4.5" fill="#0096c7" />
+    <circle cx="200" cy="415" r="4.5" fill="#00ff9d" />
+    <circle cx="200" cy="445" r="4.5" fill="#0096c7" />
+    <circle cx="200" cy="470" r="4.5" fill="#00ff9d" />
+    
+    <!-- Cybernetic Skeletal Ribs -->
+    <!-- Pair 1 -->
+    <path d="M 195 342 C 140 342, 118 365, 135 382 C 158 387, 185 372, 195 358" fill="none" stroke="#0096c7" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M 205 342 C 260 342, 282 365, 265 382 C 242 387, 215 372, 205 358" fill="none" stroke="#0096c7" stroke-width="2.5" stroke-linecap="round" />
+    <!-- Pair 2 -->
+    <path d="M 195 372 C 130 372, 108 395, 125 412 C 148 417, 180 402, 195 388" fill="none" stroke="#00ff9d" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M 205 372 C 270 372, 292 395, 275 412 C 252 417, 220 402, 205 388" fill="none" stroke="#00ff9d" stroke-width="2.5" stroke-linecap="round" />
+    <!-- Pair 3 -->
+    <path d="M 195 402 C 135 404, 118 426, 135 440 C 158 444, 180 430, 195 418" fill="none" stroke="#0096c7" stroke-width="2" stroke-linecap="round" />
+    <path d="M 205 402 C 265 404, 282 426, 265 440 C 242 444, 220 430, 205 418" fill="none" stroke="#0096c7" stroke-width="2" stroke-linecap="round" />
+    <!-- Pair 4 (Floating Ribs) -->
+    <path d="M 195 432 C 150 434, 135 452, 150 462 C 168 464, 185 454, 195 446" fill="none" stroke="#00ff9d" stroke-width="1.8" stroke-linecap="round" />
+    <path d="M 205 432 C 250 434, 265 452, 250 462 C 232 464, 215 454, 205 446" fill="none" stroke="#00ff9d" stroke-width="1.8" stroke-linecap="round" />
+
+    <!-- Central Glowing Chest Cyber Core Generator -->
+    <circle cx="200" cy="382" r="18" fill="#050a12" stroke="#00ff9d" stroke-width="2.5" />
+    <circle cx="200" cy="382" r="12" fill="none" stroke="#0096c7" stroke-width="2" stroke-dasharray="4,4" />
+    <circle cx="200" cy="382" r="6" fill="#00ff9d" filter="url(#neonGlow)" />
+  </g>
+  
+  <!-- Shoulder Actuators & Skeletal Arms -->
+  <g class="robot-arms">
+    <!-- Left Shoulder & Skeletal Arm -->
+    <circle cx="108" cy="326" r="12" fill="#09121e" stroke="#0096c7" stroke-width="2" />
+    <path d="M 104 336 L 82 410 L 74 485" fill="none" stroke="#0096c7" stroke-width="3" stroke-linecap="round" />
+    <circle cx="82" cy="410" r="7" fill="#00ff9d" />
+    <!-- Left Skeletal Claw Hand -->
+    <path d="M 74 485 L 60 512 M 74 485 L 74 518 M 74 485 L 88 512" stroke="#00ff9d" stroke-width="2.2" stroke-linecap="round" />
+    
+    <!-- Right Shoulder & Skeletal Arm -->
+    <circle cx="292" cy="326" r="12" fill="#09121e" stroke="#0096c7" stroke-width="2" />
+    <path d="M 296 336 L 318 410 L 326 485" fill="none" stroke="#0096c7" stroke-width="3" stroke-linecap="round" />
+    <circle cx="318" cy="410" r="7" fill="#00ff9d" />
+    <!-- Right Skeletal Claw Hand -->
+    <path d="M 326 485 L 312 512 M 326 485 L 326 518 M 326 485 L 340 512" stroke="#00ff9d" stroke-width="2.2" stroke-linecap="round" />
+  </g>
+  
+  <!-- Pelvis Socket Base & Femur Connectors -->
+  <g class="robot-pelvis">
+    <path d="M 165 478 L 200 505 L 235 478 L 220 525 L 180 525 Z" fill="#09121e" stroke="#0096c7" stroke-width="2" />
+    <line x1="180" y1="525" x2="162" y2="555" stroke="#00ff9d" stroke-width="3.5" stroke-linecap="round" />
+    <line x1="220" y1="525" x2="238" y2="555" stroke="#00ff9d" stroke-width="3.5" stroke-linecap="round" />
+  </g>
+  
+  <!-- Cyber Circuit Extension Lines Emitting from Skeleton -->
+  <g class="skeleton-circuit-tails" opacity="0.6">
+    <path d="M 108 326 L 40 326 L 20 300" fill="none" stroke="#0096c7" stroke-width="1.5" stroke-dasharray="4,4" />
+    <path d="M 292 326 L 360 326 L 380 300" fill="none" stroke="#0096c7" stroke-width="1.5" stroke-dasharray="4,4" />
+    <path d="M 74 518 L 40 540" fill="none" stroke="#00ff9d" stroke-width="1.5" stroke-dasharray="3,3" />
+    <path d="M 326 518 L 360 540" fill="none" stroke="#00ff9d" stroke-width="1.5" stroke-dasharray="3,3" />
+  </g>
+</svg>

@@ -200,9 +200,194 @@ CYBER_CSS = """
         font-weight: bold;
         letter-spacing: 0.5px;
     }
+
+    /* Fixed Animated Cyber Background with Skeleton Robot & Circuit Lines */
+    .cyber-bg-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none !important;
+        z-index: 0;
+        overflow: hidden;
+        opacity: 0.18;
+    }
+
+    /* Animated Scanning Laser Line */
+    .cyber-scanning-laser {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 2.5px;
+        background: linear-gradient(90deg, transparent 0%, rgba(0, 150, 199, 0.4) 20%, #00ff9d 50%, rgba(0, 150, 199, 0.4) 80%, transparent 100%);
+        box-shadow: 0 0 16px rgba(0, 255, 157, 0.9), 0 0 35px rgba(0, 150, 199, 0.6);
+        animation: laserSweep 9s linear infinite;
+    }
+
+    @keyframes laserSweep {
+        0% { top: -2%; opacity: 0; }
+        8% { opacity: 0.9; }
+        92% { opacity: 0.9; }
+        100% { top: 102%; opacity: 0; }
+    }
+
+    /* Ambient Horizon Perspective Grid Lines */
+    .cyber-grid-floor {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50vh;
+        background: 
+            linear-gradient(to bottom, rgba(8, 9, 11, 1) 0%, rgba(8, 9, 11, 0.2) 100%),
+            repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(0, 150, 199, 0.12) 60px),
+            repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0, 255, 157, 0.08) 40px);
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+    }
+
+    /* Robot Skeleton Cartoon Hover & Positioning */
+    .cyber-skeleton-droid {
+        position: absolute;
+        bottom: 2%;
+        right: 2%;
+        width: 320px;
+        height: 448px;
+        animation: droidHover 6s ease-in-out infinite;
+        filter: drop-shadow(0 0 18px rgba(0, 255, 157, 0.4));
+    }
+
+    @keyframes droidHover {
+        0%, 100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+            transform: translateY(-16px) rotate(1.2deg);
+        }
+    }
+
+    /* Secondary Skeleton Droid Silhouette on Left Edge */
+    .cyber-skeleton-silhouette {
+        position: absolute;
+        top: 14%;
+        left: -35px;
+        width: 220px;
+        height: 308px;
+        opacity: 0.45;
+        animation: droidHoverLeft 8s ease-in-out infinite;
+        filter: drop-shadow(0 0 12px rgba(0, 150, 199, 0.3));
+    }
+
+    @keyframes droidHoverLeft {
+        0%, 100% {
+            transform: translateY(0px) rotate(0deg) scaleX(-1);
+        }
+        50% {
+            transform: translateY(-14px) rotate(-1.2deg) scaleX(-1);
+        }
+    }
+
+    /* Animated Background Circuit & Data Stream Lines */
+    .cyber-circuit-svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .circuit-stream-1 {
+        stroke-dasharray: 12, 18;
+        animation: flowLine 12s linear infinite;
+    }
+
+    .circuit-stream-2 {
+        stroke-dasharray: 16, 24;
+        animation: flowLineRev 15s linear infinite;
+    }
+
+    .circuit-stream-3 {
+        stroke-dasharray: 8, 14;
+        animation: flowLine 9s linear infinite;
+    }
+
+    @keyframes flowLine {
+        from { stroke-dashoffset: 400; }
+        to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes flowLineRev {
+        from { stroke-dashoffset: 0; }
+        to { stroke-dashoffset: 400; }
+    }
+
+    /* Floating Data Particle Nodes */
+    @keyframes pulseNode {
+        0%, 100% { r: 3.5px; opacity: 0.45; }
+        50% { r: 5.5px; opacity: 1; }
+    }
+    .pulsing-circuit-node {
+        animation: pulseNode 3s ease-in-out infinite;
+    }
 </style>
 """
 st.markdown(CYBER_CSS, unsafe_allow_html=True)
+
+# -----------------------------------------------------------------------------
+# Animated Background: Skeleton Robot Cartoon + Cyber Circuit Lines
+# -----------------------------------------------------------------------------
+def _load_compact_bg_svg() -> str:
+    path = "data/robot_skeleton_cartoon.svg"
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
+            raw = f.read()
+    else:
+        raw = "<svg></svg>"
+    return "".join(
+        line.strip() for line in raw.splitlines()
+        if line.strip() and not line.strip().startswith("<!--")
+    )
+
+ROBOT_SKELETON_COMPACT = _load_compact_bg_svg()
+
+CIRCUIT_SVG_COMPACT = (
+    '<svg class="cyber-circuit-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="none">'
+    '<defs>'
+    '<filter id="circuitGlow" x="-50%" y="-50%" width="200%" height="200%">'
+    '<feGaussianBlur stdDeviation="3" result="blur" />'
+    '<feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>'
+    '</filter>'
+    '</defs>'
+    '<path d="M 0 140 L 320 140 L 420 240 L 820 240 L 920 340 L 1380 340 L 1600 340" fill="none" stroke="#0096c7" stroke-width="2" class="circuit-stream-1" opacity="0.6" />'
+    '<path d="M 0 560 L 260 560 L 340 480 L 700 480 L 800 580 L 1220 580 L 1320 480 L 1600 480" fill="none" stroke="#00ff9d" stroke-width="2" class="circuit-stream-2" opacity="0.55" />'
+    '<path d="M 180 0 L 180 260 L 250 330 L 250 680 L 310 740 L 310 900" fill="none" stroke="#0096c7" stroke-width="1.5" class="circuit-stream-3" opacity="0.5" />'
+    '<path d="M 1240 0 L 1240 220 L 1160 300 L 1160 620 L 1240 700 L 1240 900" fill="none" stroke="#00ff9d" stroke-width="1.5" class="circuit-stream-1" opacity="0.5" />'
+    '<line x1="420" y1="240" x2="700" y2="480" stroke="#007ba7" stroke-width="1.5" stroke-dasharray="4,8" opacity="0.4" />'
+    '<line x1="800" y1="580" x2="920" y2="340" stroke="#00ff9d" stroke-width="1.5" stroke-dasharray="4,8" opacity="0.4" />'
+    '<circle cx="320" cy="140" r="4.5" fill="#00ff9d" filter="url(#circuitGlow)" class="pulsing-circuit-node" />'
+    '<circle cx="420" cy="240" r="5" fill="#0096c7" filter="url(#circuitGlow)" class="pulsing-circuit-node" />'
+    '<circle cx="820" cy="240" r="4" fill="#00ff9d" filter="url(#circuitGlow)" class="pulsing-circuit-node" />'
+    '<circle cx="920" cy="340" r="5" fill="#0096c7" filter="url(#circuitGlow)" class="pulsing-circuit-node" />'
+    '<circle cx="260" cy="560" r="4.5" fill="#00ff9d" filter="url(#circuitGlow)" class="pulsing-circuit-node" />'
+    '<circle cx="700" cy="480" r="5" fill="#0096c7" filter="url(#circuitGlow)" class="pulsing-circuit-node" />'
+    '<circle cx="800" cy="580" r="4.5" fill="#00ff9d" filter="url(#circuitGlow)" class="pulsing-circuit-node" />'
+    '<circle cx="1220" cy="580" r="4" fill="#0096c7" filter="url(#circuitGlow)" class="pulsing-circuit-node" />'
+    '<circle cx="250" cy="330" r="4.5" fill="#00ff9d" filter="url(#circuitGlow)" class="pulsing-circuit-node" />'
+    '<circle cx="1160" cy="300" r="5" fill="#0096c7" filter="url(#circuitGlow)" class="pulsing-circuit-node" />'
+    '</svg>'
+)
+
+CYBER_BACKGROUND_HTML = (
+    '<div class="cyber-bg-canvas">'
+    '<div class="cyber-scanning-laser"></div>'
+    '<div class="cyber-grid-floor"></div>'
+    + CIRCUIT_SVG_COMPACT +
+    f'<div class="cyber-skeleton-droid">{ROBOT_SKELETON_COMPACT}</div>'
+    f'<div class="cyber-skeleton-silhouette">{ROBOT_SKELETON_COMPACT}</div>'
+    '</div>'
+)
+st.markdown(CYBER_BACKGROUND_HTML, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
 # Session State Initialization
