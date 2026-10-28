@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<nmaprun scanner="nmap" args="nmap -sV -sC -O --traceroute -p 22,53,80,88,389,443,445,3389 192.168.10.0/24" start="1729854000">
+  <host>
+    <status state="up" reason="arp-response"/>
+    <address addr="192.168.10.45" addrtype="ipv4"/>
+    <address addr="00:0C:29:4F:8E:1A" addrtype="mac" vendor="VMware"/>
+    <hostnames>
+      <hostname name="app-server.corp.local" type="user"/>
+      <hostname name="mgmt.corp.local" type="PTR"/>
+    </hostnames>
+    <os>
+      <osmatch name="Microsoft Windows Server 2019 or 2022" accuracy="96"/>
+    </os>
+    <distance value="2"/>
+    <ports>
+      <port protocol="tcp" portid="80">
+        <state state="open"/>
+        <service name="http" product="Apache httpd" version="2.4.25"/>
+        <script id="http-title" output="Internal Management Portal (v2.1)"/>
+        <script id="http-methods" output="Supported Methods: GET HEAD POST OPTIONS TRACE"/>
+      </port>
+      <port protocol="tcp" portid="3389">
+        <state state="open"/>
+        <service name="ms-wbt-server" product="Microsoft Terminal Services"/>
+        <script id="rdp-vuln-ms12-020" output="State: VULNERABLE - Remote Desktop Denial of Service / Memory Corruption"/>
+        <script id="ssl-cert" output="Subject: CN=app-server.corp.local | Issuer: Self-Signed CA | Validity: EXPIRED"/>
+      </port>
+    </ports>
+    <hostscript>
+      <script id="smb-os-discovery" output="OS: Windows Server 2019 Standard 17763 | Computer name: app-server | Domain: CORP.LOCAL"/>
+    </hostscript>
+  </host>
+  <host>
+    <status state="up" reason="echo-reply"/>
+    <address addr="192.168.10.50" addrtype="ipv4"/>
+    <address addr="00:0C:29:1B:3C:99" addrtype="mac" vendor="VMware"/>
+    <hostnames>
+      <hostname name="dc01.corp.local" type="PTR"/>
+    </hostnames>
+    <os>
+      <osmatch name="Microsoft Windows Server 2022" accuracy="98"/>
+    </os>
+    <distance value="1"/>
+    <ports>
+      <port protocol="tcp" portid="53">
+        <state state="open"/>
+        <service name="domain" product="Microsoft DNS" version="6.1.7601"/>
+      </port>
+      <port protocol="tcp" portid="88">
+        <state state="open"/>
+        <service name="kerberos-sec" product="Microsoft Windows Kerberos"/>
+      </port>
+      <port protocol="tcp" portid="389">
+        <state state="open"/>
+        <service name="ldap" product="Microsoft Windows Active Directory LDAP"/>
+        <script id="ldap-rootdse" output="defaultNamingContext: DC=corp,DC=local"/>
+      </port>
+      <port protocol="tcp" portid="445">
+        <state state="open"/>
+        <service name="microsoft-ds" product="Windows Server 2022 SMB"/>
+        <script id="smb-security-mode" output="Message signing enabled but not required (Vulnerable to NTLM Relay)"/>
+      </port>
+    </ports>
+  </host>
+  <host>
+    <status state="up" reason="echo-reply"/>
+    <address addr="192.168.10.60" addrtype="ipv4"/>
+    <address addr="52:54:00:12:34:56" addrtype="mac" vendor="QEMU Virtual NIC"/>
+    <hostnames>
+      <hostname name="gateway-edge.corp.local" type="PTR"/>
+    </hostnames>
+    <os>
+      <osmatch name="Linux 5.4 - 5.15 (Ubuntu Linux)" accuracy="94"/>
+    </os>
+    <distance value="1"/>
+    <ports>
+      <port protocol="tcp" portid="22">
+        <state state="open"/>
+        <service name="ssh" product="OpenSSH" version="8.2p1 Ubuntu 4ubuntu0.5"/>
+        <script id="ssh2-enum-algos" output="Supported Key Exchange: diffie-hellman-group1-sha1 (Weak)"/>
+      </port>
+      <port protocol="tcp" portid="443">
+        <state state="open"/>
+        <service name="https" product="nginx" version="1.18.0"/>
+        <script id="ssl-enum-ciphers" output="TLSv1.0 enabled with 3DES-EDE-CBC (Vulnerable to SWEET32)"/>
+      </port>
+    </ports>
+  </host>
+</nmaprun>

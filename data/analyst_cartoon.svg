@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="100%" height="100%">
+  <defs>
+    <radialGradient id="analystBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="70%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#05070a"/>
+    </radialGradient>
+    <linearGradient id="analystCerulean" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00ff9d"/>
+      <stop offset="40%" stop-color="#00e5ff"/>
+      <stop offset="100%" stop-color="#007ba7"/>
+    </linearGradient>
+    <filter id="analystGlow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Disk -->
+  <circle cx="120" cy="120" r="110" fill="url(#analystBg)" stroke="#007ba7" stroke-width="2.5"/>
+  <circle cx="120" cy="120" r="102" fill="none" stroke="#00ff9d" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.6"/>
+
+  <!-- Tactical Shoulders & Vest -->
+  <path d="M45 220 C50 170, 80 155, 120 155 C160 155, 190 170, 195 220 Z" fill="#0d131f" stroke="#0096c7" stroke-width="2"/>
+  
+  <!-- Cerulean & Emerald Armor Plate -->
+  <polygon points="105,165 135,165 142,205 98,205" fill="#09101d" stroke="url(#analystCerulean)" stroke-width="2"/>
+  <polygon points="120,175 128,182 128,194 120,200 112,194 112,182" fill="none" stroke="#00ff9d" stroke-width="1.5" filter="url(#analystGlow)"/>
+
+  <!-- Head & Hair -->
+  <circle cx="120" cy="105" r="32" fill="#1b2434"/>
+  <path d="M88 100 C88 65, 152 65, 152 100 C145 75, 95 75, 88 100 Z" fill="#060910"/>
+
+  <!-- Tactical Headset / Comm Device -->
+  <path d="M86 92 C82 92, 82 115, 86 115 Z" fill="#0096c7" stroke="#00ff9d" stroke-width="1.5"/>
+  <line x1="86" y1="110" x2="104" y2="128" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="106" cy="129" r="3" fill="#00ff9d" filter="url(#analystGlow)"/>
+
+  <!-- Tactical HUD Monocle (Left Eye) with Emerald Lock -->
+  <circle cx="110" cy="104" r="8" fill="#007ba7" opacity="0.6"/>
+  <circle cx="110" cy="104" r="8" fill="none" stroke="#00e5ff" stroke-width="1.5" filter="url(#analystGlow)"/>
+  <line x1="102" y1="104" x2="118" y2="104" stroke="#00ff9d" stroke-width="1"/>
+  <circle cx="130" cy="104" r="3" fill="#00ff9d"/>
+</svg>

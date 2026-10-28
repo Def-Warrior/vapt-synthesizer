@@ -1,0 +1,59 @@
+{
+  "target": "core-banking-db.internal.corp",
+  "scanner": "Enterprise Compliance & Privileged Auditor v5.0",
+  "audit_type": "Authenticated Deep CIS Benchmark & Vulnerability Audit",
+  "authenticated": true,
+  "credentials_profile": "Domain Admin & SSH Key (Privileged Access Audit)",
+  "timestamp": "2026-10-28T09:00:00Z",
+  "hosts": [
+    {
+      "ip": "10.100.4.15",
+      "hostnames": ["core-banking-db.internal.corp", "db01.corp.internal"],
+      "os": "Red Hat Enterprise Linux 9.2 (Kernel 5.14.0-284.11.1.el9_2.x86_64)",
+      "ports": ["22/tcp", "5432/tcp", "9100/tcp", "2379/tcp"],
+      "status": "up"
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "title": "Linux Kernel Local Privilege Escalation (Dirty Cred)",
+      "severity": "CRITICAL",
+      "cve": "CVE-2022-2588",
+      "cvss": 7.8,
+      "component": "10.100.4.15:kernel",
+      "description": "Authenticated audit discovered unpatched cls_route filter flaw in Linux kernel allowing local unprivileged user to escalate to root.",
+      "remediation": "Update kernel packages to 5.14.0-284.25.1.el9_2 or higher and reboot system.",
+      "authenticated_check": true
+    },
+    {
+      "title": "PostgreSQL Plaintext Superuser Password in Local Config",
+      "severity": "HIGH",
+      "cve": "N/A",
+      "cvss": 8.4,
+      "component": "10.100.4.15:5432",
+      "description": "Authenticated file audit identified plaintext administrative credentials stored in /var/lib/pgsql/data/pg_hba.conf and environment profile.",
+      "remediation": "Migrate database authentication to scram-sha-256 and remove plaintext credentials from local files.",
+      "authenticated_check": true
+    },
+    {
+      "title": "SSH Root Login Permitted via Password Authentication",
+      "severity": "HIGH",
+      "cve": "CIS-Benchmark-5.2.10",
+      "cvss": 7.5,
+      "component": "10.100.4.15:22",
+      "description": "SSHD configuration permits direct root login with password authentication contrary to CIS Benchmark 5.2.10.",
+      "remediation": "Set 'PermitRootLogin no' and 'PasswordAuthentication no' in /etc/ssh/sshd_config and restart sshd.",
+      "authenticated_check": true
+    },
+    {
+      "title": "Unencrypted Database Backup Directory with World-Readable Permissions",
+      "severity": "HIGH",
+      "cve": "N/A",
+      "cvss": 7.1,
+      "component": "10.100.4.15:/backup/db_dumps",
+      "description": "Cron automated database dump directory has 0777 permissions allowing any local user to read customer transactional tables.",
+      "remediation": "Enforce chmod 0700 on backup storage directories and encrypt dump archives with GPG.",
+      "authenticated_check": true
+    }
+  ]
+}

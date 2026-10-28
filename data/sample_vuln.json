@@ -1,0 +1,31 @@
+{
+  "target": "prod-api-internal.corp.local",
+  "scanner": "Enterprise Vulnerability Assessor v4.2",
+  "timestamp": "2026-10-29T08:30:00Z",
+  "vulnerabilities": [
+    {
+      "title": "Unauthenticated Remote Code Execution",
+      "severity": "CRITICAL",
+      "cve": "CVE-2024-38077",
+      "cvss": 9.8,
+      "component": "auth-service:8443",
+      "description": "Buffer overflow in the RPC parsing routine allows unauthenticated remote attackers to execute arbitrary system commands via crafted network packets."
+    },
+    {
+      "title": "Weak TLS 1.0/1.1 Protocol Negotiation Allowed",
+      "severity": "LOW",
+      "cve": "N/A",
+      "cvss": 3.7,
+      "component": "ingress-lb:443",
+      "description": "The remote server accepts legacy TLS 1.0 and 1.1 handshakes, enabling theoretical downgrade attacks and cipher block chaining weaknesses."
+    },
+    {
+      "title": "PostgreSQL Service Default Administrative Accounts",
+      "severity": "HIGH",
+      "cve": "CVE-2023-5869",
+      "cvss": 8.1,
+      "component": "db-primary.internal:5432",
+      "description": "Database management daemon contains active default system credentials reachable over internal subnets without rate limiting."
+    }
+  ]
+}

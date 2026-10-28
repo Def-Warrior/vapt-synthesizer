@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<NessusClientData_v2>
+  <Policy>
+    <policyName>Advanced Network Infrastructure &amp; AD Audit</policyName>
+  </Policy>
+  <Report name="Enterprise_Core_Infrastructure_Audit">
+    <ReportHost name="192.168.1.15">
+      <HostProperties>
+        <tag name="host-ip">192.168.1.15</tag>
+        <tag name="host-fqdn">dc01.corp.internal</tag>
+        <tag name="netbios-name">DC01</tag>
+        <tag name="operating-system">Microsoft Windows Server 2022 Datacenter</tag>
+        <tag name="mac-address">00:50:56:af:3b:01</tag>
+        <tag name="credentialed_scan">true</tag>
+        <tag name="system-type">general-purpose</tag>
+      </HostProperties>
+      <ReportItem port="445" svc_name="cifs" protocol="tcp" severity="4" pluginID="100001" pluginName="Microsoft Windows SMBv1 Multiple Remote Code Execution (EternalBlue)" pluginFamily="Windows">
+        <synopsis>The remote Windows host is affected by multiple remote code execution vulnerabilities in SMBv1.</synopsis>
+        <description>The remote Windows host is affected by multiple vulnerabilities in the SMBv1 implementation that allow an unauthenticated attacker to execute arbitrary code with SYSTEM privileges via crafted SMB packets.</description>
+        <solution>Apply Microsoft security update MS17-010 or disable SMBv1 across all domain controllers via Group Policy.</solution>
+        <risk_factor>Critical</risk_factor>
+        <cvss_base_score>9.8</cvss_base_score>
+        <cvss3_base_score>9.8</cvss3_base_score>
+        <cve>CVE-2017-0144</cve>
+        <plugin_output>SMBv1 is active and responds to unauthenticated tree connect requests.</plugin_output>
+      </ReportItem>
+      <ReportItem port="88" svc_name="kerberos" protocol="tcp" severity="3" pluginID="100002" pluginName="Active Directory Kerberos Pre-Authentication Security Elevation" pluginFamily="Windows">
+        <synopsis>Kerberos authentication protocol vulnerability allows privilege escalation.</synopsis>
+        <description>The Kerberos KDC fails to adequately enforce encryption algorithm restrictions on ticket granting requests, allowing elevation of privilege from standard domain user to Enterprise Admin.</description>
+        <solution>Deploy Microsoft cumulative update KB5019966 and enforce AES-256 for Kerberos ticket encryption.</solution>
+        <risk_factor>High</risk_factor>
+        <cvss_base_score>8.1</cvss_base_score>
+        <cvss3_base_score>8.1</cvss3_base_score>
+        <cve>CVE-2022-37966</cve>
+      </ReportItem>
+      <ReportItem port="3389" svc_name="ms-wbt-server" protocol="tcp" severity="2" pluginID="100003" pluginName="Terminal Services Encryption Level is Not FIPS-140 Compliant" pluginFamily="Windows">
+        <synopsis>Remote Desktop Services encryption does not meet high assurance standards.</synopsis>
+        <description>The remote RDP service permits client-compatible encryption levels instead of enforcing TLS 1.3 with FIPS-validated cryptography.</description>
+        <solution>Configure 'Set client connection encryption level' to 'High Level' or 'FIPS Compliant' via GPO.</solution>
+        <risk_factor>Medium</risk_factor>
+        <cvss_base_score>5.3</cvss_base_score>
+        <cvss3_base_score>5.3</cvss3_base_score>
+        <cve>CVE-2021-34527</cve>
+      </ReportItem>
+    </ReportHost>
+    <ReportHost name="192.168.1.42">
+      <HostProperties>
+        <tag name="host-ip">192.168.1.42</tag>
+        <tag name="host-fqdn">db-node-01.corp.internal</tag>
+        <tag name="operating-system">Ubuntu Linux 22.04 LTS (Jammy Jellyfish)</tag>
+        <tag name="mac-address">00:50:56:c0:00:08</tag>
+        <tag name="credentialed_scan">true</tag>
+        <tag name="system-type">general-purpose</tag>
+      </HostProperties>
+      <ReportItem port="5432" svc_name="postgresql" protocol="tcp" severity="4" pluginID="200001" pluginName="PostgreSQL Superuser Privilege Escalation via Extension Scripts" pluginFamily="Databases">
+        <synopsis>The remote database is vulnerable to arbitrary code execution.</synopsis>
+        <description>PostgreSQL versions prior to 15.4, 14.9, or 13.12 contain a flaw where an unprivileged database user can execute arbitrary code with database superuser privileges via crafted extension install scripts.</description>
+        <solution>Upgrade PostgreSQL server packages to version 15.4 / 14.9 or higher and revoke CREATE perms from PUBLIC schema.</solution>
+        <risk_factor>Critical</risk_factor>
+        <cvss_base_score>9.0</cvss_base_score>
+        <cvss3_base_score>9.0</cvss3_base_score>
+        <cve>CVE-2023-39417</cve>
+      </ReportItem>
+      <ReportItem port="22" svc_name="ssh" protocol="tcp" severity="1" pluginID="200002" pluginName="SSH Server Supports Weak CBC Ciphers" pluginFamily="General">
+        <synopsis>The SSH service allows obsolete cipher suites.</synopsis>
+        <description>The SSH daemon supports CBC mode ciphers which are susceptible to plaintext recovery attacks.</description>
+        <solution>Update /etc/ssh/sshd_config to only allow chacha20-poly1305@openssh.com and aes256-gcm@openssh.com.</solution>
+        <risk_factor>Low</risk_factor>
+        <cvss_base_score>3.7</cvss_base_score>
+        <cvss3_base_score>3.7</cvss3_base_score>
+      </ReportItem>
+    </ReportHost>
+  </Report>
+</NessusClientData_v2>

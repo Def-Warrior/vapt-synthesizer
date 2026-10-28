@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="cyberBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0e1726"/>
+      <stop offset="70%" stop-color="#080c14"/>
+      <stop offset="100%" stop-color="#05070a"/>
+    </radialGradient>
+
+    <!-- Cerulean Blue Neon Glow -->
+    <linearGradient id="ceruleanGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00e5ff"/>
+      <stop offset="50%" stop-color="#0096c7"/>
+      <stop offset="100%" stop-color="#007ba7"/>
+    </linearGradient>
+
+    <!-- Electric Neon Emerald Accent -->
+    <linearGradient id="emeraldGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00ff9d"/>
+      <stop offset="50%" stop-color="#05ffa1"/>
+      <stop offset="100%" stop-color="#00b4d8"/>
+    </linearGradient>
+
+    <!-- Dark Jet Black Fabric -->
+    <linearGradient id="hoodieGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#18202c"/>
+      <stop offset="50%" stop-color="#0d121a"/>
+      <stop offset="100%" stop-color="#070a0e"/>
+    </linearGradient>
+
+    <!-- Visor Glow Filter -->
+    <filter id="neonBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="emeraldBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Cyber Disk with Cerulean & Neon Emerald Rings -->
+  <circle cx="120" cy="120" r="110" fill="url(#cyberBg)" stroke="#0096c7" stroke-width="3" stroke-dasharray="6,4"/>
+  <circle cx="120" cy="120" r="98" fill="none" stroke="#00ff9d" stroke-width="1.2" stroke-dasharray="3,6" opacity="0.6"/>
+
+  <!-- Matrix Binary Particle Accents (Electric Emerald & Cerulean) -->
+  <text x="35" y="60" fill="#00ff9d" font-family="monospace" font-size="9" opacity="0.8">0101</text>
+  <text x="180" y="70" fill="#00b4d8" font-family="monospace" font-size="9" opacity="0.7">1010</text>
+  <text x="28" y="160" fill="#00ff9d" font-family="monospace" font-size="8" opacity="0.7">&gt;_GEMMA</text>
+  <text x="185" y="150" fill="#00e5ff" font-family="monospace" font-size="8" opacity="0.7">ROOT#</text>
+
+  <!-- Hacker Shoulders / Hoodie Body -->
+  <path d="M40 215 C45 165, 80 150, 120 150 C160 150, 195 165, 200 215 Z" fill="url(#hoodieGrad)" stroke="#0096c7" stroke-width="2"/>
+
+  <!-- Hoodie Chest Cerulean & Emerald Trim -->
+  <path d="M100 155 L120 185 L140 155" fill="none" stroke="url(#emeraldGlow)" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Hacker Hood Outer Contour -->
+  <path d="M65 135 C60 70, 75 35, 120 35 C165 35, 180 70, 175 135 C170 160, 155 170, 120 170 C85 170, 70 160, 65 135 Z" fill="url(#hoodieGrad)" stroke="#00b4d8" stroke-width="2.5"/>
+
+  <!-- Shadow Inside Hood -->
+  <path d="M75 130 C72 80, 85 50, 120 50 C155 50, 168 80, 165 130 C158 152, 145 160, 120 160 C95 160, 82 152, 75 130 Z" fill="#05070a"/>
+
+  <!-- Stylized Masked Face (Shadowed) -->
+  <ellipse cx="120" cy="112" rx="35" ry="38" fill="#0d1117"/>
+
+  <!-- Cyber Hacker Visor / Futuristic Goggles (Glowing Cerulean) -->
+  <rect x="90" y="96" width="60" height="20" rx="6" fill="#007ba7" stroke="#00e5ff" stroke-width="2" filter="url(#neonBlur)"/>
+  
+  <!-- Visor Digital Grid Reflection & Emerald Target Reticle -->
+  <line x1="90" y1="106" x2="150" y2="106" stroke="#ffffff" stroke-width="1" opacity="0.6"/>
+  <rect x="96" y="100" width="10" height="12" fill="#ffffff" opacity="0.4" rx="2"/>
+  <circle cx="138" cy="106" r="3" fill="#00ff9d" filter="url(#emeraldBlur)"/>
+
+  <!-- Hacker Headset & Antenna with Emerald Beacon -->
+  <path d="M68 95 C62 95, 62 120, 68 120 Z" fill="#0096c7" stroke="#00e5ff" stroke-width="1.5"/>
+  <path d="M172 95 C178 95, 178 120, 172 120 Z" fill="#0096c7" stroke="#00e5ff" stroke-width="1.5"/>
+  <line x1="65" y1="110" x2="80" y2="135" stroke="#00b4d8" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="82" cy="136" r="3.5" fill="#00ff9d" filter="url(#emeraldBlur)"/>
+
+  <!-- Hacker Laptop in Foreground -->
+  <polygon points="65,225 175,225 165,195 75,195" fill="#080c14" stroke="#0096c7" stroke-width="2"/>
+  
+  <!-- Glowing Screen Back Logo (Cyber Shield / Terminal Prompt) -->
+  <polygon points="120,200 132,207 132,216 120,222 108,216 108,207" fill="none" stroke="#00ff9d" stroke-width="1.5" filter="url(#emeraldBlur)"/>
+  <text x="114" y="215" fill="#00ff9d" font-family="monospace" font-size="8" font-weight="bold">&gt;_</text>
+
+  <!-- Dual Glowing Keyboard Light Reflection (Emerald + Cerulean) -->
+  <ellipse cx="120" cy="227" rx="45" ry="3" fill="#00ff9d" opacity="0.75" filter="url(#emeraldBlur)"/>
+  <ellipse cx="120" cy="228" rx="35" ry="2" fill="#00e5ff" opacity="0.9" filter="url(#neonBlur)"/>
+</svg>
