@@ -36,9 +36,9 @@ Modern cybersecurity teams face a critical dilemma: security scanners (Nmap, CIS
 
 #### ⚙️ How We Built It
 - **Core AI Engine:** Google DeepMind's **Gemma 4** running on local Ollama, optimized for CPU execution with exact thread bounding (`num_thread=2`), RAM weight caching (`keep_alive="60m"`), and compact intelligence tokenization.
-- **Frontend & UX:** Streamlit customized with a high-contrast tactical triple-tone palette (**Jet Black** `#08090b` + **Cerulean Blue** `#0096c7` + **Electric Neon Emerald** `#00ff9d`), interactive vector hacker mascot, and 30+ FPS throttled token streaming.
+- **Frontend & UX:** Streamlit customized with a high-contrast tactical triple-tone palette (**Deep Obsidian Slate** `#141822` + **Cerulean Blue** `#0096c7` + **Electric Neon Emerald** `#00ff9d`), Gemini Terminal sequential input flow with auto-scrolling, robot skeleton background animation, and GPU-composited 60 FPS rendering.
 - **Open Standard:** Implemented as an official **Agent Skill Open Standard v2** (`SKILL.md`).
-- **Test-Driven Reliability:** Backed by **30 automated unit tests** in `pytest` covering authentication, XML/JSON parsing, multimodal ingestion, and streaming.
+- **Test-Driven Reliability:** Backed by **33 automated unit tests** in `pytest` covering authentication, XML/JSON parsing, multimodal ingestion, and streaming.
 
 #### 🧗 Challenges We Conquered
 - **Token Streaming Performance on CPU:** Optimized prompt tokenization by condensing raw JSON into a structured intelligence brief (-60% token overhead), accelerating prompt ingestion and rendering at 16+ tokens/sec on standard dual-core hardware.
@@ -47,7 +47,7 @@ Modern cybersecurity teams face a critical dilemma: security scanners (Nmap, CIS
 #### 🏅 Accomplishments We're Proud Of
 - 100% offline, zero-telemetry execution: not a single byte leaves the local machine.
 - Seamless dual-track alignment hitting both the **Google DeepMind Gemma 4** and **DigitalOcean Open-Source AI** challenges.
-- Passing **30 out of 30 unit tests**.
+- Passing **33 out of 33 unit tests**.
 
 #### 🔮 What's Next for Agentic VAPT Synthesizer
 - Live MCP (Model Context Protocol) connector for Burp Suite and Wireshark.
@@ -86,7 +86,7 @@ Modern cybersecurity teams face a critical dilemma: security scanners (Nmap, CIS
 > *"Judges, we didn't just build a wrapper. 
 > 1. We built a **Dual-Engine Architecture**: if our local Ollama daemon were ever unplugged, our built-in Autonomous Air-Gap engine instantly takes over. It never crashes.
 > 2. With one click here in Tab 3, I can export a **Printable NIST-Compliant Executive Audit Dossier** ready for a CTO's desk.
-> 3. And from an engineering standpoint, our codebase has **30 passing automated unit tests** covering everything from PBKDF2 brute-force defense to multimodal parsing."*
+> 3. And from an engineering standpoint, our codebase has **33 passing automated unit tests** covering everything from PBKDF2 brute-force defense to multimodal parsing."*
 
 ### [1:45 – 2:00] Open Source & Hacktoberfest Closing
 > *"We packaged this under the Apache 2.0 license as an official **Agent Skill v2** standard with a complete Hacktoberfest contribution roadmap for adding community parsers like Nessus and Nuclei.
