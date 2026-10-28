@@ -12,7 +12,6 @@ import os
 import time
 from typing import Any, Dict, List
 import streamlit as st
-import streamlit.components.v1 as components
 
 from agent.auth import authenticate_analyst, DEFAULT_ANALYSTS
 from agent.parser import parse_vulnerability_input
@@ -1232,30 +1231,28 @@ TYPE PROMPT & PRESS ENTER // TERMINAL AT END OF CHAT
                 st.rerun()
 
             # Automatic Smooth Scroll into View (Brings terminal right in front of user)
-            components.html(
+            st.html(
                 """
                 <script>
                     setTimeout(() => {
                         try {
-                            const parentDoc = window.parent.document;
-                            const main = parentDoc.querySelector('main') || parentDoc.querySelector('.main') || parentDoc.querySelector('[data-testid="stMain"]');
+                            const main = document.querySelector('main') || document.querySelector('.main') || document.querySelector('[data-testid="stMain"]');
                             if (main) {
                                 requestAnimationFrame(() => {
                                     main.scrollTo({ top: main.scrollHeight, behavior: 'smooth' });
                                 });
                             }
-                            const inp = parentDoc.querySelector('input[key="terminal_typed_input_bottom"], input[aria-label="Terminal Command Line"]');
+                            const inp = document.querySelector('input[key="terminal_typed_input_bottom"], input[aria-label="Terminal Command Line"]');
                             if (inp) {
                                 inp.focus({ preventScroll: true });
                             }
                         } catch (e) {
                             console.warn("Auto-scroll error:", e);
                         }
-                    }, 120);
+                    }, 100);
                 </script>
                 """,
-                height=0,
-                width=0
+                unsafe_allow_javascript=True
             )
 
     # -------------------------------------------------------------------------
