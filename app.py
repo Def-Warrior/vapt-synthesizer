@@ -34,31 +34,31 @@ st.set_page_config(
 )
 
 # -----------------------------------------------------------------------------
-# Jet Black + Cerulean Blue + Electric Neon Emerald Tactical Cyber Styling
+# Deep Obsidian Slate (25% Darkness Cut) + Cerulean + Electric Neon Emerald Styling
 # -----------------------------------------------------------------------------
 CYBER_CSS = """
 <style>
-    /* Jet Black Core Theme Overrides */
+    /* 25% Darkness-Cut Deep Obsidian Core Theme */
     .stApp {
-        background-color: #08090b !important;
+        background-color: #141822 !important;
         color: #d8e2ec !important;
     }
     
     /* Top Header Bar */
     header[data-testid="stHeader"] {
-        background-color: rgba(8, 9, 11, 0.95) !important;
+        background-color: rgba(20, 24, 34, 0.95) !important;
         border-bottom: 1px solid rgba(0, 150, 199, 0.25) !important;
     }
     
     /* Sidebar Styling */
     section[data-testid="stSidebar"] {
-        background-color: #0a0d14 !important;
+        background-color: #161c28 !important;
         border-right: 1px solid rgba(0, 150, 199, 0.25) !important;
     }
 
     /* Cerulean Blue & Emerald Glowing Metric Cards */
     div[data-testid="stMetric"] {
-        background-color: #0d121c !important;
+        background-color: #1c2434 !important;
         border: 1px solid rgba(0, 150, 199, 0.35) !important;
         border-radius: 8px !important;
         padding: 12px 16px !important;
@@ -81,7 +81,7 @@ CYBER_CSS = """
     /* Primary Action Buttons: Cerulean to Electric Neon Emerald Gradient */
     button[kind="primary"] {
         background: linear-gradient(135deg, #007ba7 0%, #0096c7 40%, #00ff9d 100%) !important;
-        color: #08090b !important;
+        color: #0b1016 !important;
         border: 1px solid #00ff9d !important;
         border-radius: 6px !important;
         font-weight: 700 !important;
@@ -97,13 +97,13 @@ CYBER_CSS = """
     }
 
     button[kind="secondary"] {
-        background-color: #101622 !important;
+        background-color: #1a2232 !important;
         color: #00b4d8 !important;
         border: 1px solid rgba(0, 150, 199, 0.4) !important;
         border-radius: 6px !important;
     }
     button[kind="secondary"]:hover {
-        background-color: #162030 !important;
+        background-color: #222d42 !important;
         border-color: #00ff9d !important;
         color: #00ff9d !important;
         box-shadow: 0 0 12px rgba(0, 255, 157, 0.25) !important;
@@ -111,19 +111,19 @@ CYBER_CSS = """
 
     /* Chat Messages Styling: Assistant in Emerald Neon, User in Cerulean */
     div[data-testid="stChatMessage"] {
-        background-color: #0d121c !important;
-        border: 1px solid rgba(0, 150, 199, 0.2) !important;
+        background-color: #1b2332 !important;
+        border: 1px solid rgba(0, 150, 199, 0.25) !important;
         border-radius: 8px !important;
         margin-bottom: 12px !important;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
     }
     div[data-testid="stChatMessage"]:has(span[data-testid="stChatMessageAvatarAssistant"]) {
         border-left: 4px solid #00ff9d !important;
-        box-shadow: -2px 0 12px rgba(0, 255, 157, 0.15), 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+        box-shadow: -2px 0 12px rgba(0, 255, 157, 0.15), 0 2px 10px rgba(0, 0, 0, 0.35) !important;
     }
     div[data-testid="stChatMessage"]:has(span[data-testid="stChatMessageAvatarUser"]) {
         border-left: 4px solid #0096c7 !important;
-        box-shadow: -2px 0 12px rgba(0, 150, 199, 0.15), 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+        box-shadow: -2px 0 12px rgba(0, 150, 199, 0.15), 0 2px 10px rgba(0, 0, 0, 0.35) !important;
     }
 
     /* Tabs Styling */
@@ -138,7 +138,7 @@ CYBER_CSS = """
 
     /* Expander Styling */
     div[data-testid="stExpander"] {
-        background-color: #0b1018 !important;
+        background-color: #18202e !important;
         border: 1px solid rgba(0, 150, 199, 0.25) !important;
         border-radius: 6px !important;
     }
@@ -178,7 +178,7 @@ CYBER_CSS = """
 
     /* Tactical Continue Conversation Box */
     .continue-box {
-        background: linear-gradient(135deg, #0c141f 0%, #070d14 100%) !important;
+        background: linear-gradient(135deg, #1c2638 0%, #151d2a 100%) !important;
         border: 1px solid #00ff9d !important;
         border-radius: 10px !important;
         padding: 14px 18px !important;
@@ -211,7 +211,7 @@ CYBER_CSS = """
         pointer-events: none !important;
         z-index: 0;
         overflow: hidden;
-        opacity: 0.18;
+        opacity: 0.22;
     }
 
     /* Animated Scanning Laser Line */
@@ -240,7 +240,7 @@ CYBER_CSS = """
         width: 100%;
         height: 50vh;
         background: 
-            linear-gradient(to bottom, rgba(8, 9, 11, 1) 0%, rgba(8, 9, 11, 0.2) 100%),
+            linear-gradient(to bottom, rgba(20, 24, 34, 1) 0%, rgba(20, 24, 34, 0.2) 100%),
             repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(0, 150, 199, 0.12) 60px),
             repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0, 255, 157, 0.08) 40px);
         mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
@@ -349,7 +349,7 @@ CYBER_CSS = """
         }
     }
     .telemetry-card {
-        background: linear-gradient(135deg, #0d121c 0%, #080c14 100%);
+        background: linear-gradient(135deg, #1c2436 0%, #151c28 100%);
         border: 1px solid rgba(0, 150, 199, 0.35);
         border-radius: 10px;
         padding: 16px 20px;
@@ -406,14 +406,14 @@ CYBER_CSS = """
 
     /* Structured Finding Cards */
     .finding-card {
-        background: linear-gradient(135deg, #0d121c 0%, #070c14 100%) !important;
+        background: linear-gradient(135deg, #1c2436 0%, #151c28 100%) !important;
         border-radius: 8px !important;
         padding: 18px 22px !important;
         margin-bottom: 16px !important;
-        border-top: 1px solid rgba(0, 150, 199, 0.2) !important;
-        border-right: 1px solid rgba(0, 150, 199, 0.2) !important;
-        border-bottom: 1px solid rgba(0, 150, 199, 0.2) !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.45) !important;
+        border-top: 1px solid rgba(0, 150, 199, 0.25) !important;
+        border-right: 1px solid rgba(0, 150, 199, 0.25) !important;
+        border-bottom: 1px solid rgba(0, 150, 199, 0.25) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35) !important;
         transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
     }
     .finding-card:hover {
@@ -422,12 +422,21 @@ CYBER_CSS = """
         border-color: rgba(0, 255, 157, 0.4) !important;
     }
     .finding-remediation-box {
-        background-color: #05080e !important;
+        background-color: #101520 !important;
         padding: 12px 16px !important;
         border-radius: 6px !important;
         border: 1px solid rgba(0, 150, 199, 0.35) !important;
         margin-top: 10px !important;
         line-height: 1.5 !important;
+    }
+
+    /* Tactical Terminal Command Console Line */
+    div[data-testid="stForm"]:has(input[aria-label="Terminal Command Line"]) {
+        background: linear-gradient(135deg, #1a2334 0%, #131926 100%) !important;
+        border: 1px solid rgba(0, 255, 157, 0.45) !important;
+        border-radius: 8px !important;
+        padding: 10px 14px 6px 14px !important;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35), 0 0 12px rgba(0, 255, 157, 0.1) !important;
     }
 </style>
 """
@@ -531,15 +540,15 @@ def render_login_screen():
         # Hacker Mascot Banner in Login
         st.markdown(
             """
-            <div style="background: linear-gradient(180deg, #0d131f 0%, #06090f 100%); border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 12px; padding: 26px; box-shadow: 0 0 25px rgba(0, 255, 157, 0.15); text-align: center;">
+            <div style="background: linear-gradient(180deg, #1c2538 0%, #121824 100%); border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 12px; padding: 26px; box-shadow: 0 0 25px rgba(0, 255, 157, 0.15); text-align: center;">
                 <div style="display: flex; justify-content: center; margin-bottom: 15px;">
-                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240' width='110' height='110'><circle cx='120' cy='120' r='110' fill='%2305070a' stroke='%230096c7' stroke-width='3'/><circle cx='120' cy='120' r='98' fill='none' stroke='%2300ff9d' stroke-width='1.5' stroke-dasharray='4,4'/><path d='M65 135 C60 70, 75 35, 120 35 C165 35, 180 70, 175 135 Z' fill='%2318202c' stroke='%2300b4d8' stroke-width='2.5'/><rect x='90' y='96' width='60' height='20' rx='6' fill='%23007ba7' stroke='%2300ff9d' stroke-width='2'/><polygon points='65,225 175,225 165,195 75,195' fill='%23080c14' stroke='%230096c7' stroke-width='2'/><text x='112' y='215' fill='%2300ff9d' font-family='monospace' font-size='10'>&gt;_</text></svg>" width="100" style="filter: drop-shadow(0 0 10px rgba(0, 255, 157, 0.35));"/>
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240' width='110' height='110'><circle cx='120' cy='120' r='110' fill='%23121824' stroke='%230096c7' stroke-width='3'/><circle cx='120' cy='120' r='98' fill='none' stroke='%2300ff9d' stroke-width='1.5' stroke-dasharray='4,4'/><path d='M65 135 C60 70, 75 35, 120 35 C165 35, 180 70, 175 135 Z' fill='%231c2638' stroke='%2300b4d8' stroke-width='2.5'/><rect x='90' y='96' width='60' height='20' rx='6' fill='%23007ba7' stroke='%2300ff9d' stroke-width='2'/><polygon points='65,225 175,225 165,195 75,195' fill='%23101622' stroke='%230096c7' stroke-width='2'/><text x='112' y='215' fill='%2300ff9d' font-family='monospace' font-size='10'>&gt;_</text></svg>" width="100" style="filter: drop-shadow(0 0 10px rgba(0, 255, 157, 0.35));"/>
                 </div>
                 <h2 style="margin: 0; font-family: monospace; letter-spacing: 1px;">
                     <span style="color: #00e5ff;">🛡️ CYBER RECON AI</span> // <span style="color: #00ff9d;">PORTAL</span>
                 </h2>
                 <p style="color: #00b4d8; font-size: 0.9em; margin-top: 6px;">
-                    Jet Black Air-Gap Tactical Console • <span style="color: #00ff9d;">Gemma Neural Engine</span><br>
+                    Obsidian Slate Tactical Console • <span style="color: #00ff9d;">Gemma Neural Engine</span><br>
                     <span style="color: #8b9bb4;">Security clearance token required for session authorization.</span>
                 </p>
             </div>
@@ -583,13 +592,13 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
         st.markdown(
             """
             <div style="display: flex; align-items: center; gap: 14px;">
-                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240' width='44' height='44'><circle cx='120' cy='120' r='110' fill='%2305070a' stroke='%230096c7' stroke-width='4'/><circle cx='120' cy='120' r='96' fill='none' stroke='%2300ff9d' stroke-width='1.5' stroke-dasharray='3,5'/><rect x='90' y='96' width='60' height='20' rx='6' fill='%23007ba7' stroke='%2300ff9d' stroke-width='2'/></svg>" width="44"/>
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240' width='44' height='44'><circle cx='120' cy='120' r='110' fill='%23121824' stroke='%230096c7' stroke-width='4'/><circle cx='120' cy='120' r='96' fill='none' stroke='%2300ff9d' stroke-width='1.5' stroke-dasharray='3,5'/><rect x='90' y='96' width='60' height='20' rx='6' fill='%23007ba7' stroke='%2300ff9d' stroke-width='2'/></svg>" width="44"/>
                 <div>
                     <h2 style="margin: 0; color: #ffffff; font-family: monospace; letter-spacing: 0.5px;">
                         <span style="color: #00e5ff;">CYBER</span> <span style="color: #00ff9d;">RECON</span> <span style="color: #ffffff;">// VAPT SYNTHESIZER</span>
                     </h2>
                     <span style="color: #8b9bb4; font-size: 0.85em;">
-                        <span class="emerald-pulsing-dot"></span>Jet Black Canvas • Cerulean Intelligence • <span style="color: #00ff9d; font-weight: 600;">Electric Emerald</span>
+                        <span class="emerald-pulsing-dot"></span>Tactical Obsidian Canvas • Cerulean Intelligence • <span style="color: #00ff9d; font-weight: 600;">Electric Emerald</span>
                     </span>
                 </div>
             </div>
@@ -599,7 +608,7 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
     with header_col2:
         st.markdown(
             f"""
-            <div style="background-color: #0c121d; border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 6px; padding: 8px 12px; text-align: right; box-shadow: 0 0 12px rgba(0, 255, 157, 0.15);">
+            <div style="background-color: #18202e; border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 6px; padding: 8px 12px; text-align: right; box-shadow: 0 0 12px rgba(0, 255, 157, 0.15);">
                 <span style="color: #00ff9d; font-weight: bold; font-family: monospace;">● {user['role'].upper()}</span><br>
                 <span style="color: #8b9bb4; font-size: 0.8em;">{user['name']} • {user['clearance']}</span>
             </div>
@@ -616,7 +625,7 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
         # Mascot Mini-Card in Sidebar
         st.markdown(
             """
-            <div style="background: linear-gradient(180deg, #0f1624 0%, #080c14 100%); border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 8px; padding: 12px; text-align: center; margin-bottom: 12px; box-shadow: 0 0 15px rgba(0, 255, 157, 0.15);">
+            <div style="background: linear-gradient(180deg, #1c2538 0%, #141a26 100%); border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 8px; padding: 12px; text-align: center; margin-bottom: 12px; box-shadow: 0 0 15px rgba(0, 255, 157, 0.15);">
                 <div style="color: #00ff9d; font-family: monospace; font-size: 0.9em; font-weight: bold;">[ NEURAL AGENT MATRIX ]</div>
                 <div style="color: #8b9bb4; font-size: 0.75em; margin-top: 4px;">ACTIVE DEFENSIVE SYNTHESIS</div>
             </div>
@@ -900,89 +909,85 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
     with tab_chat:
         # Interactive Cyber Hacker Hero Banner with Cerulean & Electric Neon Emerald Accents
         st.markdown(
-            f"""
-            <div style="background: linear-gradient(135deg, #0e1522 0%, #06090e 100%); border: 1px solid rgba(0, 255, 157, 0.35); border-radius: 10px; padding: 18px 22px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0, 255, 157, 0.12); display: flex; align-items: center; justify-content: space-between;">
-                <div style="display: flex; align-items: center; gap: 18px;">
-                    <div style="position: relative;">
-                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240' width='85' height='85'><circle cx='120' cy='120' r='110' fill='%2305070a' stroke='%230096c7' stroke-width='4'/><circle cx='120' cy='120' r='98' fill='none' stroke='%2300ff9d' stroke-width='1.5' stroke-dasharray='4,4'/><path d='M65 135 C60 70, 75 35, 120 35 C165 35, 180 70, 175 135 Z' fill='%2318202c' stroke='%2300b4d8' stroke-width='2.5'/><rect x='90' y='96' width='60' height='20' rx='6' fill='%23007ba7' stroke='%2300ff9d' stroke-width='2'/><polygon points='65,225 175,225 165,195 75,195' fill='%23080c14' stroke='%230096c7' stroke-width='2'/><text x='112' y='215' fill='%2300ff9d' font-family='monospace' font-size='10'>&gt;_</text></svg>" width="75" style="filter: drop-shadow(0 0 8px rgba(0, 255, 157, 0.45)); border-radius: 50%;"/>
-                    </div>
-                    <div>
-                        <div style="font-family: monospace; font-size: 1.1em; font-weight: bold; letter-spacing: 0.5px;">
-                            <span style="color: #00e5ff;">CYBER RECON AI</span> // <span style="color: #00ff9d;">GEMMA BOT</span>
-                        </div>
-                        <div style="color: #8b9bb4; font-size: 0.85em; margin-top: 4px;">
-                            <span class="emerald-pulsing-dot"></span><strong>STATUS:</strong> <span style="color: #00ff9d;">ONLINE</span> • <strong>ENGINE:</strong> {model_name.upper()} • <strong>TARGET:</strong> <code>{str(metadata.get('target', 'N/A'))[:45]}</code>
-                        </div>
-                        <div style="color: #00b4d8; font-size: 0.8em; margin-top: 2px;">
-                            🔒 Air-Gapped Inference • Zero Off-Box Network Dispatch
-                        </div>
-                    </div>
-                </div>
-                <div style="text-align: right;">
-                    <span style="background-color: rgba(0, 255, 157, 0.12); color: #00ff9d; border: 1px solid #00ff9d; padding: 4px 10px; border-radius: 20px; font-family: monospace; font-size: 0.8em;">
-                        <span class="emerald-pulsing-dot"></span>LIVE STREAMING ACTIVE
-                    </span>
-                </div>
-            </div>
-            """,
+            f"""<div style="background: linear-gradient(135deg, #1c2638 0%, #141a26 100%); border: 1px solid rgba(0, 255, 157, 0.35); border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; box-shadow: 0 4px 20px rgba(0, 255, 157, 0.12); display: flex; align-items: center; justify-content: space-between;">
+<div style="display: flex; align-items: center; gap: 18px;">
+<div style="position: relative;">
+<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240' width='85' height='85'><circle cx='120' cy='120' r='110' fill='%23121824' stroke='%230096c7' stroke-width='4'/><circle cx='120' cy='120' r='98' fill='none' stroke='%2300ff9d' stroke-width='1.5' stroke-dasharray='4,4'/><path d='M65 135 C60 70, 75 35, 120 35 C165 35, 180 70, 175 135 Z' fill='%231c2638' stroke='%2300b4d8' stroke-width='2.5'/><rect x='90' y='96' width='60' height='20' rx='6' fill='%23007ba7' stroke='%2300ff9d' stroke-width='2'/><polygon points='65,225 175,225 165,195 75,195' fill='%23101622' stroke='%230096c7' stroke-width='2'/><text x='112' y='215' fill='%2300ff9d' font-family='monospace' font-size='10'>&gt;_</text></svg>" width="75" style="filter: drop-shadow(0 0 8px rgba(0, 255, 157, 0.45)); border-radius: 50%;"/>
+</div>
+<div>
+<div style="font-family: monospace; font-size: 1.1em; font-weight: bold; letter-spacing: 0.5px;">
+<span style="color: #00e5ff;">CYBER RECON AI</span> // <span style="color: #00ff9d;">GEMMA BOT</span>
+</div>
+<div style="color: #8b9bb4; font-size: 0.85em; margin-top: 4px;">
+<span class="emerald-pulsing-dot"></span><strong>STATUS:</strong> <span style="color: #00ff9d;">ONLINE</span> • <strong>ENGINE:</strong> {model_name.upper()} • <strong>TARGET:</strong> <code>{str(metadata.get('target', 'N/A'))[:45]}</code>
+</div>
+<div style="color: #00b4d8; font-size: 0.8em; margin-top: 2px;">
+🔒 Air-Gapped Inference • Zero Off-Box Network Dispatch
+</div>
+</div>
+</div>
+<div style="text-align: right;">
+<span style="background-color: rgba(0, 255, 157, 0.12); color: #00ff9d; border: 1px solid #00ff9d; padding: 4px 10px; border-radius: 20px; font-family: monospace; font-size: 0.8em;">
+<span class="emerald-pulsing-dot"></span>LIVE STREAMING ACTIVE
+</span>
+</div>
+</div>""",
             unsafe_allow_html=True
         )
 
-        # Stop Control Bar
-        stop_col1, stop_col2 = st.columns([4.2, 1.8])
-        with stop_col2:
-            if st.button("⏹️ Stop Chat", type="secondary", width="stretch", help="Halt the current streaming response immediately like ChatGPT."):
-                st.session_state["stop_requested"] = True
-                st.session_state["show_continue_box"] = True
-                st.rerun()
+        # ---------------------------------------------------------------------
+        # Terminal Command Line (Interactive typing line shown after main IP header)
+        # ---------------------------------------------------------------------
+        st.markdown(
+            """<div style="background: linear-gradient(135deg, #182234 0%, #121824 100%); border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 8px 8px 0 0; padding: 10px 14px 4px 14px; border-bottom: none;">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div style="color: #00ff9d; font-family: monospace; font-size: 0.8em; font-weight: bold; letter-spacing: 0.5px;">
+<span class="emerald-pulsing-dot"></span>[>_ ANALYST TERMINAL COMMAND LINE]
+</div>
+<div style="color: #00b4d8; font-family: monospace; font-size: 0.74em;">
+EXECUTE PROMPT OR DIRECTIVE BELOW
+</div>
+</div>
+</div>""",
+            unsafe_allow_html=True
+        )
 
-        # Render Conversation Stream with Cartoon Avatars
-        hacker_avatar_path = "data/hacker_cartoon.svg"
-        analyst_avatar_path = "data/analyst_cartoon.svg"
+        with st.form(key="terminal_prompt_form", clear_on_submit=True):
+            t_col_in, t_col_exec, t_col_stop = st.columns([7.2, 1.4, 1.4])
+            with t_col_in:
+                terminal_typed_prompt = st.text_input(
+                    "Terminal Command Line",
+                    placeholder=">_ Type vulnerability query, host remediation directive, or CVE question...",
+                    label_visibility="collapsed",
+                    key="terminal_typed_input"
+                )
+            with t_col_exec:
+                terminal_executed = st.form_submit_button("⚡ Run", type="primary", width="stretch")
+            with t_col_stop:
+                terminal_stop_hit = st.form_submit_button("⏹️ Stop", type="secondary", width="stretch")
 
-        for msg in st.session_state["messages"]:
-            avatar = hacker_avatar_path if msg["role"] == "assistant" else analyst_avatar_path
-            with st.chat_message(msg["role"], avatar=avatar):
-                st.markdown(msg["content"])
+        if terminal_stop_hit:
+            st.session_state["stop_requested"] = True
+            st.session_state["show_continue_box"] = True
+            st.rerun()
 
-        # Tactical Continue Conversation Box (shown after stop)
-        if st.session_state.get("show_continue_box"):
-            st.markdown(
-                """
-                <div class="continue-box">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <div class="continue-badge">
-                            <span class="emerald-pulsing-dot"></span>
-                            ⏸️ CONVERSATION PAUSED // OPERATOR HALT
-                        </div>
-                        <span style="color: #00ff9d; font-size: 0.8em; font-family: monospace; font-weight: bold;">
-                            [ RESUME MATRIX READY ]
-                        </span>
-                    </div>
-                    <p style="color: #d8e2ec; font-size: 0.9em; margin: 0 0 10px 0;">
-                        The generation was interrupted. Choose how you would like to continue the conversation:
-                    </p>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            c_col1, c_col2, c_col3, c_col4 = st.columns([3, 3, 3, 1])
-            with c_col1:
-                if st.button("▶️ Continue Generation", key="btn_continue_stream", type="primary", width="stretch", help="Resume output directly from where it stopped"):
-                    selected_prompt = "Please continue your previous response directly from where you stopped without repeating the existing text."
-                    st.session_state["show_continue_box"] = False
-            with c_col2:
-                if st.button("🔧 Detail Remediation", key="btn_continue_remed", width="stretch", help="Pivot to specific hardening and patch commands"):
-                    selected_prompt = "Provide prioritized technical remediation commands and hardening guidance for the identified findings."
-                    st.session_state["show_continue_box"] = False
-            with c_col3:
-                if st.button("📋 Key Takeaways", key="btn_continue_takeaways", width="stretch", help="Summarize key risk takeaways"):
-                    selected_prompt = "Summarize the critical takeaways and overall security posture in a concise briefing."
-                    st.session_state["show_continue_box"] = False
-            with c_col4:
-                if st.button("✖️ Dismiss", key="btn_continue_dismiss", width="stretch", help="Close this continue prompt"):
-                    st.session_state["show_continue_box"] = False
-                    st.rerun()
+        # Tactical SOC Follow-Up Directives (2x2 grid directly under terminal line)
+        st.caption("⚡ Quick Directives & Fast Attack Vectors:")
+        f_row1_c1, f_row1_c2 = st.columns(2)
+        with f_row1_c1:
+            if st.button("🛡️ Hardening Scripts & Terminal Patches", key="btn_fup_harden", width="stretch", help="Generate ready-to-run terminal patch commands"):
+                selected_prompt = "Generate exact terminal hardening commands and configuration snippets to mitigate these vulnerabilities."
+        with f_row1_c2:
+            if st.button("🔬 Attack Surface & OS Fingerprints", key="btn_fup_surface", width="stretch", help="Assess exposed services and OS footprint"):
+                selected_prompt = "Deeply analyze discovered OS fingerprints, exposed high-risk ports, and external attack surface vectors."
+
+        f_row2_c1, f_row2_c2 = st.columns(2)
+        with f_row2_c1:
+            if st.button("📊 CVSS 3.1 Vector Exploitability Matrix", key="btn_fup_cvss", width="stretch", help="Examine exploitability metrics"):
+                selected_prompt = "Break down the CVSS 3.1 exploitability metrics, attack complexity, and business impact for the findings."
+        with f_row2_c2:
+            if st.button("📑 Executive Leadership Sign-Off Memo", key="btn_fup_exec", width="stretch", help="Draft leadership summary"):
+                selected_prompt = "Draft an executive summary memo for C-suite leadership detailing posture and required remediation timeline."
 
         # Multimodal Architecture Diagram / Screenshot Ingestion (Gemma 4 Vision Alignment)
         with st.expander("🖼️ Multimodal Architecture Diagram / Screenshot (Gemma 4 Vision)", expanded=False):
@@ -1017,37 +1022,31 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
                     arch_img_b64_list = [base64.b64encode(img_bytes).decode("utf-8")]
                     st.info("● Sample network topology diagram attached for multimodal correlation.")
 
-        # Input Bar with ChatGPT-style submit_mode="stop"
-        user_input = st.chat_input(
+        # Bottom Chat Input Bar (also active for flexibility)
+        bottom_chat_input = st.chat_input(
             "Ask anything about this scan, host topology, CVEs, or remediation...",
             submit_mode="stop"
         )
-        prompt_to_send = selected_prompt or user_input
+        prompt_to_send = selected_prompt or (terminal_typed_prompt if terminal_executed and terminal_typed_prompt.strip() else None) or bottom_chat_input
 
-        # Interactive Quick Follow-Up Directives (visible when messages exist and not interrupted)
-        if st.session_state["messages"] and not st.session_state.get("show_continue_box"):
-            st.markdown("<div style='height: 6px;'></div>", unsafe_allow_html=True)
-            st.caption("⚡ Tactical SOC Follow-Up Directives:")
-            f_row1_c1, f_row1_c2 = st.columns(2)
-            with f_row1_c1:
-                if st.button("🛡️ Hardening Scripts & Terminal Patches", key="btn_fup_harden", width="stretch", help="Generate ready-to-run terminal patch commands"):
-                    prompt_to_send = "Generate exact terminal hardening commands and configuration snippets to mitigate these vulnerabilities."
-            with f_row1_c2:
-                if st.button("🔬 Attack Surface & OS Fingerprints", key="btn_fup_surface", width="stretch", help="Assess exposed services and OS footprint"):
-                    prompt_to_send = "Deeply analyze discovered OS fingerprints, exposed high-risk ports, and external attack surface vectors."
+        # ---------------------------------------------------------------------
+        # Straight-Flow Conversation Log (ChatGPT style: answer starts from upper start, lines stream below)
+        # ---------------------------------------------------------------------
+        st.markdown("<div style='border-top: 1px solid rgba(0, 150, 199, 0.25); margin: 16px 0 16px 0;'></div>", unsafe_allow_html=True)
 
-            f_row2_c1, f_row2_c2 = st.columns(2)
-            with f_row2_c1:
-                if st.button("📊 CVSS 3.1 Vector Exploitability Matrix", key="btn_fup_cvss", width="stretch", help="Examine exploitability metrics"):
-                    prompt_to_send = "Break down the CVSS 3.1 exploitability metrics, attack complexity, and business impact for the findings."
-            with f_row2_c2:
-                if st.button("📑 Executive Leadership Sign-Off Memo", key="btn_fup_exec", width="stretch", help="Draft leadership summary"):
-                    prompt_to_send = "Draft an executive summary memo for C-suite leadership detailing posture and required remediation timeline."
+        hacker_avatar_path = "data/hacker_cartoon.svg"
+        analyst_avatar_path = "data/analyst_cartoon.svg"
 
+        # Render all past messages in clean chronological flow
+        for msg in st.session_state["messages"]:
+            avatar = hacker_avatar_path if msg["role"] == "assistant" else analyst_avatar_path
+            with st.chat_message(msg["role"], avatar=avatar):
+                st.markdown(msg["content"])
+
+        # When a prompt is sent: append user turn and stream assistant response directly below in straight line
         if prompt_to_send:
             st.session_state["stop_requested"] = False
             st.session_state["show_continue_box"] = False
-            # Append user message
             st.session_state["messages"].append({"role": "user", "content": prompt_to_send})
             with st.chat_message("user", avatar=analyst_avatar_path):
                 st.markdown(prompt_to_send)
@@ -1067,7 +1066,6 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
                         fallback=True,
                         images=arch_img_b64_list
                     ):
-                        # Check if stop was requested during stream
                         if st.session_state.get("stop_requested"):
                             full_reply += "\n\n*(⏹️ Generation stopped by analyst)*"
                             st.session_state["show_continue_box"] = True
@@ -1075,21 +1073,55 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
                             break
 
                         full_reply += token
-                        st.session_state["in_progress_reply"] = full_reply
                         now = time.time()
-                        # Batch token rendering every 75ms or on double-newline for silky-smooth 15-20 FPS updates
-                        # This cuts Streamlit virtual DOM redraw thrashing by 60%, allowing CPU to focus on Ollama
                         if now - last_render_time > 0.075 or "\n\n" in full_reply[-4:]:
                             response_container.markdown(full_reply + "▌")
                             last_render_time = now
 
                     response_container.markdown(full_reply)
 
-            # Clear temporary in-progress tracking and persist full response
-            st.session_state.pop("in_progress_reply", None)
             st.session_state["messages"].append({"role": "assistant", "content": full_reply})
-            if selected_prompt:
-                st.rerun()
+            st.rerun()
+
+        # Tactical Continue Conversation Box (shown directly after stopped stream)
+        if st.session_state.get("show_continue_box"):
+            st.markdown(
+                """<div class="continue-box">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+<div class="continue-badge">
+<span class="emerald-pulsing-dot"></span>
+⏸️ CONVERSATION PAUSED // OPERATOR HALT
+</div>
+<span style="color: #00ff9d; font-size: 0.8em; font-family: monospace; font-weight: bold;">
+[ RESUME MATRIX READY ]
+</span>
+</div>
+<p style="color: #d8e2ec; font-size: 0.9em; margin: 0 0 10px 0;">
+The generation was interrupted. Choose how you would like to continue the conversation:
+</p>
+</div>""",
+                unsafe_allow_html=True
+            )
+            c_col1, c_col2, c_col3, c_col4 = st.columns([3.2, 3.2, 3.2, 1.4])
+            with c_col1:
+                if st.button("▶️ Continue Generation", key="btn_continue_stream", type="primary", width="stretch", help="Resume output directly from where it stopped"):
+                    st.session_state["show_continue_box"] = False
+                    st.session_state["messages"].append({"role": "user", "content": "Please continue your previous response directly from where you stopped without repeating the existing text."})
+                    st.rerun()
+            with c_col2:
+                if st.button("🔧 Detail Remediation", key="btn_continue_remed", width="stretch", help="Pivot to specific hardening and patch commands"):
+                    st.session_state["show_continue_box"] = False
+                    st.session_state["messages"].append({"role": "user", "content": "Provide prioritized technical remediation commands and hardening guidance for the identified findings."})
+                    st.rerun()
+            with c_col3:
+                if st.button("📋 Key Takeaways", key="btn_continue_takeaways", width="stretch", help="Summarize key risk takeaways"):
+                    st.session_state["show_continue_box"] = False
+                    st.session_state["messages"].append({"role": "user", "content": "Summarize the critical takeaways and overall security posture in a concise briefing."})
+                    st.rerun()
+            with c_col4:
+                if st.button("✖️ Dismiss", key="btn_continue_dismiss", width="stretch", help="Close this continue prompt"):
+                    st.session_state["show_continue_box"] = False
+                    st.rerun()
 
     # -------------------------------------------------------------------------
     # Tab 2: Deep Recon & Topology
