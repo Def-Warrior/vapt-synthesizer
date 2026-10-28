@@ -757,17 +757,9 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
                 st.session_state["loaded_scan_content"] = raw_text
                 st.session_state["parsed_scan"] = structured_data
                 st.toast(f"Intelligence Feed Ingested: {active_name}", icon="🛡️")
-                # Reset conversation with new scan context
-                welcome_msg = (
-                    f"🛡️ **CYBER INTELLIGENCE STREAM ACQUIRED: `{active_name}`**\n\n"
-                    f"- **Target Network:** `{structured_data['metadata'].get('target', 'N/A')}`\n"
-                    f"- **Assessment Profile:** `{structured_data['metadata'].get('scan_type', 'VAPT Scan')}`\n"
-                    f"- **Privileged Mode:** `{'🔒 Authenticated Audit' if structured_data['metadata'].get('authenticated_audit') else '🌐 External Perimeter'}`\n"
-                    f"- **Assets Profiled:** `{structured_data.get('recon', {}).get('total_hosts', 1)} Host(s)` | `{structured_data.get('recon', {}).get('total_open_ports', len(structured_data.get('findings', [])))} Open Port(s)`\n"
-                    f"- **Vulnerability Vectors:** `{len(structured_data.get('findings', []))} Findings`\n\n"
-                    f"I am standing by to synthesize findings, analyze OS fingerprints, or map prioritized technical remediations. Ask any question or trigger a prompt pill below."
-                )
-                st.session_state["messages"] = [{"role": "assistant", "content": welcome_msg}]
+                # Clean start for chat conversation
+                st.session_state["messages"] = []
+                st.session_state["show_continue_box"] = False
             else:
                 st.error(f"Failed to parse scan: {msg}")
 
@@ -785,6 +777,10 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
         for label, prompt_text in prompt_pills:
             if st.button(label, width="stretch"):
                 selected_prompt = prompt_text
+
+        if selected_prompt:
+            st.session_state["pending_prompt"] = selected_prompt
+            st.rerun()
 
         if st.button("🗑️ Reset Terminal History", width="stretch"):
             st.session_state["messages"] = []
@@ -938,6 +934,45 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
             unsafe_allow_html=True
         )
 
+        # ---------------------------------------------------------------------
+        # Terminal Command Line (Rendered directly after the Target IP Header)
+        # ---------------------------------------------------------------------
+        st.markdown(
+            """<div style="background: linear-gradient(135deg, #182234 0%, #121824 100%); border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 8px 8px 0 0; padding: 10px 14px 4px 14px; margin-bottom: 0px; border-bottom: none;">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div style="color: #00ff9d; font-family: monospace; font-size: 0.8em; font-weight: bold; letter-spacing: 0.5px;">
+<span class="emerald-pulsing-dot"></span>[>_ ANALYST TERMINAL COMMAND LINE]
+</div>
+<div style="color: #00b4d8; font-family: monospace; font-size: 0.74em;">
+TYPE PROMPT & PRESS ENTER // INTERACTIVE SHELL
+</div>
+</div>
+</div>""",
+            unsafe_allow_html=True
+        )
+
+        with st.form(key="terminal_prompt_form", clear_on_submit=True):
+            t_col_in, t_col_exec, t_col_stop = st.columns([7.2, 1.4, 1.4])
+            with t_col_in:
+                terminal_typed_prompt = st.text_input(
+                    "Terminal Command Line",
+                    placeholder=">_ Type vulnerability query, host remediation directive, or CVE question... (Press Enter to Run)",
+                    label_visibility="collapsed",
+                    key="terminal_typed_input"
+                )
+            with t_col_exec:
+                terminal_executed = st.form_submit_button("⚡ Run", type="primary", width="stretch")
+            with t_col_stop:
+                terminal_stop_hit = st.form_submit_button("⏹️ Stop", type="secondary", width="stretch")
+
+        if terminal_stop_hit:
+            st.session_state["stop_requested"] = True
+            st.session_state["show_continue_box"] = True
+            st.rerun()
+
+        if terminal_executed and terminal_typed_prompt.strip():
+            prompt_to_send = terminal_typed_prompt.strip()
+
         # Tactical SOC Follow-Up Directives (compact 2x2 grid at top)
         st.caption("⚡ Quick Directives & Fast Attack Vectors:")
         f_row1_c1, f_row1_c2 = st.columns(2)
@@ -996,6 +1031,14 @@ def render_authenticated_dashboard(user: Dict[str, Any]):
         # ---------------------------------------------------------------------
         hacker_avatar_path = "data/hacker_cartoon.svg"
         analyst_avatar_path = "data/analyst_cartoon.svg"
+
+        if not st.session_state["messages"] and not prompt_to_send:
+            st.markdown(
+                """<div style="text-align: center; padding: 22px 20px; color: #8b9bb4; font-family: monospace; font-size: 0.88em; border: 1px dashed rgba(0, 150, 199, 0.3); border-radius: 8px; margin: 10px 0; background: rgba(20, 24, 34, 0.5);">
+                <span style="color: #00ff9d; font-weight: bold;">[ TERMINAL STANDBY ]</span> Type a command in the terminal above or select a quick attack vector to begin.
+                </div>""",
+                unsafe_allow_html=True
+            )
 
         # Render all past messages in clean chronological flow
         for msg in st.session_state["messages"]:
@@ -1082,46 +1125,6 @@ The generation was interrupted. Choose how you would like to continue the conver
                 if st.button("✖️ Dismiss", key="btn_continue_dismiss", width="stretch", help="Close this continue prompt"):
                     st.session_state["show_continue_box"] = False
                     st.rerun()
-
-        # ---------------------------------------------------------------------
-        # Terminal Command Line (Rendered AT THE END OF THE CHAT)
-        # ---------------------------------------------------------------------
-        st.markdown(
-            """<div style="background: linear-gradient(135deg, #182234 0%, #121824 100%); border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 8px 8px 0 0; padding: 10px 14px 4px 14px; margin-top: 18px; border-bottom: none;">
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<div style="color: #00ff9d; font-family: monospace; font-size: 0.8em; font-weight: bold; letter-spacing: 0.5px;">
-<span class="emerald-pulsing-dot"></span>[>_ ANALYST TERMINAL COMMAND LINE]
-</div>
-<div style="color: #00b4d8; font-family: monospace; font-size: 0.74em;">
-TYPE PROMPT & PRESS ENTER // TERMINAL AT END OF CHAT
-</div>
-</div>
-</div>""",
-            unsafe_allow_html=True
-        )
-
-        with st.form(key="terminal_prompt_form", clear_on_submit=True):
-            t_col_in, t_col_exec, t_col_stop = st.columns([7.2, 1.4, 1.4])
-            with t_col_in:
-                terminal_typed_prompt = st.text_input(
-                    "Terminal Command Line",
-                    placeholder=">_ Type vulnerability query, host remediation directive, or CVE question... (Press Enter to Run)",
-                    label_visibility="collapsed",
-                    key="terminal_typed_input"
-                )
-            with t_col_exec:
-                terminal_executed = st.form_submit_button("⚡ Run", type="primary", width="stretch")
-            with t_col_stop:
-                terminal_stop_hit = st.form_submit_button("⏹️ Stop", type="secondary", width="stretch")
-
-        if terminal_stop_hit:
-            st.session_state["stop_requested"] = True
-            st.session_state["show_continue_box"] = True
-            st.rerun()
-
-        if terminal_executed and terminal_typed_prompt.strip():
-            st.session_state["pending_prompt"] = terminal_typed_prompt.strip()
-            st.rerun()
 
     # -------------------------------------------------------------------------
     # Tab 2: Deep Recon & Topology
