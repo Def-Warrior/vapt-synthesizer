@@ -23,6 +23,20 @@ Designed for high-security, air-gapped environments:
 
 ---
 
+## 🎬 Live Workstation Walkthrough
+
+An end-to-end interactive demonstration of the **Agentic VAPT Synthesizer** running 100% on-device with Playwright automation:
+
+| 🔐 PBKDF2 Air-Gap Login | 🔬 Deep Recon Topology Cartography |
+| :---: | :---: |
+| ![Analyst Authentication](demo/preview_1_login.png) | ![Network Cartography](demo/preview_2_recon_topology.png) |
+| **📊 CVSS 3.1 Risk Matrix** | **💬 Live Gemma 4 Streaming & Gemini Terminal** |
+| ![Vulnerability Findings](demo/preview_3_risk_matrix.png) | ![Conversational AI Terminal](demo/preview_4_chat_terminal.png) |
+
+> 📹 **Watch Full Walkthrough Video:** The full 720p HD interactive walkthrough is available directly in the repository at [`demo/agentic_vapt_synthesizer_walkthrough.webm`](demo/agentic_vapt_synthesizer_walkthrough.webm) (Duration: 01:23).
+
+---
+
 ## ⚙️ Dual Execution Engine Architecture
 
 | Engine Mode | Requirements | Strengths |
@@ -59,6 +73,14 @@ vapt-synthesizer/
 │   ├── parser.py                    # Deep recon topology extraction & schema normalization
 │   ├── report_generator.py          # Printable NIST-compliant Executive Audit Dossier
 │   └── synthesizer.py               # Local Gemma 4 multi-turn chat & multimodal engine
+├── demo/
+│   ├── agentic_vapt_synthesizer_walkthrough.webm # Full 720p HD interactive video walkthrough
+│   ├── preview_1_login.png          # Keyframe preview: PBKDF2 authentication screen
+│   ├── preview_2_recon_topology.png # Keyframe preview: Network topology cartography
+│   ├── preview_3_risk_matrix.png    # Keyframe preview: CVSS risk & remediation matrix
+│   └── preview_4_chat_terminal.png  # Keyframe preview: Gemma 4 streaming & terminal flow
+├── scripts/
+│   └── record_demo.py               # Playwright automated headless video recorder
 ├── tests/
 │   ├── test_auth.py                 # Tests for hashing, authentication, and brute-force lockout
 │   ├── test_parser.py               # Tests for deep recon, XML/JSON parsing, and error handling
