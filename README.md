@@ -2,6 +2,20 @@
 
 The **Agentic VAPT Synthesizer** is an advanced, on-device cybersecurity assistant that transforms raw vulnerability logs and multi-host discovery scans (Nmap XML, Tenable Nessus XML, ProjectDiscovery Nuclei JSON/JSONL, CIS Benchmark JSON, and vulnerability tracker reports) into deep reconnaissance intelligence, executive risk matrices, and interactive conversational guidance.
 
+<p align="center">
+  <video src="https://github.com/Def-Warrior/vapt-synthesizer/raw/main/lv_0_20261029144444.mp4" controls autoplay loop muted playsinline width="100%">
+    <a href="https://github.com/Def-Warrior/vapt-synthesizer/blob/main/lv_0_20261029144444.mp4">▶️ Watch Demonstration Video (lv_0_20261029144444.mp4)</a>
+  </video>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Def-Warrior/vapt-synthesizer/blob/main/lv_0_20261029144444.mp4">
+    <b>▶️ Click here to watch / open full video walkthrough (lv_0_20261029144444.mp4)</b>
+  </a>
+</p>
+
+---
+
 Designed for high-security, air-gapped environments:
 - **100% Offline Execution:** Operates entirely locally via Ollama with the default `gemma` model.
 - **Hardware-Accelerated Inference & Fast UI:** Optimized thread-bounding (`num_thread=2`), keep-alive RAM caching (`60m`), compact intelligence tokenization (-60% prompt overhead), and 30+ FPS throttled token streaming without browser DOM lag.
@@ -20,20 +34,6 @@ Designed for high-security, air-gapped environments:
 - **Hacktoberfest 2026 Ready:** Apache 2.0 licensed, includes `CONTRIBUTING.md` with Good First Issues, issue templates, and `PITCH_AND_SUBMISSION.md`.
 - **Agent Skill Open Standard v2:** Implements the standardized `analyze_vuln_log` specification (`SKILL.md`).
 - **Comprehensive Test Coverage:** 33 automated unit tests verifying 100% offline security, parsing, report generation, and multimodal streaming.
-
----
-
-## 🎬 Live Workstation Walkthrough
-
-An end-to-end interactive demonstration of the **Agentic VAPT Synthesizer** running 100% on-device with Playwright automation:
-
-| 🔐 PBKDF2 Air-Gap Login | 🔬 Deep Recon Topology Cartography |
-| :---: | :---: |
-| ![Analyst Authentication](demo/preview_1_login.png) | ![Network Cartography](demo/preview_2_recon_topology.png) |
-| **📊 CVSS 3.1 Risk Matrix** | **💬 Live Gemma 4 Streaming & Gemini Terminal** |
-| ![Vulnerability Findings](demo/preview_3_risk_matrix.png) | ![Conversational AI Terminal](demo/preview_4_chat_terminal.png) |
-
-> 📹 **Watch Full Walkthrough Video:** The full 720p HD interactive walkthrough is available directly in the repository at [`demo/agentic_vapt_synthesizer_walkthrough.webm`](demo/agentic_vapt_synthesizer_walkthrough.webm) (Duration: 01:23).
 
 ---
 
@@ -73,12 +73,7 @@ vapt-synthesizer/
 │   ├── parser.py                    # Deep recon topology extraction & schema normalization
 │   ├── report_generator.py          # Printable NIST-compliant Executive Audit Dossier
 │   └── synthesizer.py               # Local Gemma 4 multi-turn chat & multimodal engine
-├── demo/
-│   ├── agentic_vapt_synthesizer_walkthrough.webm # Full 720p HD interactive video walkthrough
-│   ├── preview_1_login.png          # Keyframe preview: PBKDF2 authentication screen
-│   ├── preview_2_recon_topology.png # Keyframe preview: Network topology cartography
-│   ├── preview_3_risk_matrix.png    # Keyframe preview: CVSS risk & remediation matrix
-│   └── preview_4_chat_terminal.png  # Keyframe preview: Gemma 4 streaming & terminal flow
+├── lv_0_20261029144444.mp4          # Interactive video walkthrough
 ├── scripts/
 │   └── record_demo.py               # Playwright automated headless video recorder
 ├── tests/
